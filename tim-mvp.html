@@ -38,7 +38,7 @@ main{padding:20px 28px 60px}
 .grid{display:grid;grid-template-columns:320px 1fr;gap:20px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-.btn{font:inherit;font-weight:600;font-size:13px;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:#fff}
+.btn{font:inherit;font-weight:600;font-size:13px;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid #702963;background:#FAF7F9;color:#702963}
 .btn.ghost{background:var(--panel);color:var(--ink);border-color:var(--line)}
 .btn.small{padding:5px 10px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:default}
@@ -67,7 +67,7 @@ tr.row{cursor:pointer}
 tr.row:hover td{background:#faf9f5}
 .score{display:flex;align-items:center;gap:8px;min-width:110px}
 .score .bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
-.score .bar i{display:block;height:100%;background:var(--ink)}
+.score .bar i{display:block;height:100%;background:#702963}
 .score b{width:26px;text-align:right}
 .chip{display:inline-block;font-size:11px;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 6px;margin:1px 2px 1px 0;color:var(--ink2)}
 .empty{color:var(--muted);text-align:center;padding:30px}
@@ -93,7 +93,7 @@ textarea{min-height:180px;resize:vertical}
 .how ol{padding-left:18px;margin:6px 0}
 .how code{background:var(--bg);padding:1px 5px;border-radius:4px}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#702963;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 .toast.on{opacity:1}
 body.no-ai #newBtn, body.no-ai #dAI{display:none}
 </style>

@@ -16,7 +16,6 @@
         { id: 'objections', label: 'Objection Handling', href: 'objection-handling.html', note: '13 objections, 9 tough questions' }
       ]},
       { id: 'b2b', label: 'B2B Outreach', href: 'b2b-outreach.html' },
-      { id: 'mi', label: 'Market Intelligence', href: 'market-intelligence.html' },
       { id: 'tim', label: 'TIM MVP', href: 'tim-mvp.html' },
       { id: 'web', label: 'Website Build', href: 'website-build.html' }
     ];
