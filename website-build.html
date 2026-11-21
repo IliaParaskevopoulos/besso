@@ -20,7 +20,15 @@
 .go:focus-visible{outline:3px solid #f2a7dc;outline-offset:3px}
 .stack{position:relative;aspect-ratio:1.1;max-width:460px;width:100%;justify-self:center}
 .stack svg{position:absolute;inset:0;width:100%;height:100%}
-.ctx{max-width:70ch}
+.ctx{max-width:72ch;margin:0 0 24px}
+.wb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.wbc{background:var(--tint);border-radius:14px;padding:20px;border-top:5px solid var(--pur)}
+.wbc .n{display:block;font-size:34px;font-weight:700;color:var(--pur);line-height:1}
+.wbc h3{margin:10px 0 6px;font-size:18px}
+.wbc p{margin:0;font-size:15px}
+.bridge{margin-top:28px;border:1px solid var(--line);border-radius:14px;padding:20px 22px;max-width:900px}
+.bridge h3{margin:0 0 6px;font-size:18px}.bridge p{margin:0}
+@media(max-width:900px){.wb{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.wb{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:760px){.hero{grid-template-columns:minmax(0,1fr)}.stack{max-width:320px}}
 </style>
 </head>
@@ -28,7 +36,7 @@
 <script src="site.js" data-page="web"></script>
 <header class="band"><div class="wrap hero">
 <div>
-<p class="kick">Website Build</p>
+<p class="kick">Content · Website Build</p>
 <p class="big">80</p>
 <p class="claim">I delivered 80 product pages for Lonza Capsugel</p>
 <a class="go" href="https://www.capsugel.com">Visit capsugel.com</a>
@@ -53,7 +61,14 @@
 </div>
 </div></header>
 <main class="band"><div class="wrap">
-<p class="ctx">As Global Digital Marketing Specialist at Lonza Capsules &amp; Health Ingredients (2024–2025), I built the product website and knowledge center for Capsugel capsules, aligning more than 30 senior stakeholders through five review rounds, and kept the content and SEO up to date in Sitecore.</p>
+<p class="ctx" style="font-size:17px">As Global Digital Marketing Specialist at Lonza Capsules &amp; Health Ingredients (2024–2025), I owned the Capsugel website as a source of leads: the product pages, the resource center behind them, search, and the thought leadership that brought buyers in.</p>
+<div class="wb">
+<div class="wbc"><span class="n">80</span><h3>Product pages</h3><p>Built the product website for Capsugel capsules, page by page, aligning more than 30 senior stakeholders through five review rounds. Executive leadership gave it excellent feedback.</p></div>
+<div class="wbc"><span class="n">1</span><h3>Resource center</h3><p>Built the knowledge center that sits behind the product pages: technical content buyers use to compare products and choose.</p></div>
+<div class="wbc"><span class="n">SEO</span><h3>Search in Sitecore</h3><p>Optimised the pages for search in Sitecore, maintained and published the web content, and tracked how the content performed alongside the Marketo and Salesforce campaigns.</p></div>
+<div class="wbc"><span class="n">Leads</span><h3>Thought leadership</h3><p>Published thought-leadership content that brought in leads, and ran Capsugel's organic LinkedIn presence and paid campaigns to carry it to buyers.</p></div>
+</div>
+<div class="bridge"><h3>What this means for besso</h3><p>besso sells a complex product to customs, supply chain and finance. The same playbook applies: clear pages per use case and ICP, a resource center on trade agreements and rules of origin (EU–Indonesia is the first article to write), search that brings in people looking for answers, and thought leadership that turns them into conversations.</p></div>
 </div></main>
 </body>
 </html>

@@ -13,11 +13,15 @@
       ]},
       { id: 'sales', label: 'Sales Enablement', children: [
         { id: 'battlecards', label: 'Battlecards', href: 'battlecards.html', note: 'Four alternatives and doing nothing' },
-        { id: 'objections', label: 'Objection Handling', href: 'objection-handling.html', note: '13 objections, 9 tough questions' }
+        { id: 'objections', label: 'Objection Handling', href: 'objection-handling.html', note: '22 objections across the deal journey' },
+        { id: 'onepager', label: 'Sales One-Pager', href: 'sales-one-pager.html', note: 'Leave-behind for customs and the CFO' }
       ]},
       { id: 'b2b', label: 'B2B Outreach', href: 'b2b-outreach.html' },
-      { id: 'signal', label: 'Signal Engine', href: 'signal-engine.html' },
-      { id: 'web', label: 'Website Build', href: 'website-build.html' }
+      { id: 'signal', label: 'Signal Engine', href: 'signal-engine.html', badge: 6 },
+      { id: 'content', label: 'Content', children: [
+        { id: 'web', label: 'Website Build', href: 'website-build.html', note: '80 Capsugel product pages, SEO, resource center' },
+        { id: 'anim', label: 'Product Animation', href: 'product-animation.html', note: 'besso explained in 46 seconds' }
+      ]}
     ];
 
     if (!document.querySelector('link[href*="Montserrat"]')) {
@@ -40,6 +44,12 @@
 .sn .sn-l:hover{background:rgba(255,255,255,.12)}
 .sn .sn-l:focus-visible,.sn-menu a:focus-visible{outline:3px solid #fff;outline-offset:1px}
 .sn .sn-l[aria-current=page]{box-shadow:inset 0 -3px 0 #fff;border-radius:6px 6px 0 0}
+.sn a.sn-l{position:relative}
+.sn a.sn-l.has-badge{padding-right:26px}
+.sn-list>li:last-child .sn-menu{left:auto;right:0}
+.sn-badge{position:absolute;top:4px;right:2px;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#E41E3F;color:#fff;font:700 12px/20px Montserrat,system-ui,sans-serif;text-align:center;box-shadow:0 0 0 2px #702963;animation:snpop .5s ease-out 1}
+@keyframes snpop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.sn-badge{animation:none}}
 .sn-car{width:9px;height:9px;border:solid currentColor;border-width:0 2px 2px 0;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
 .sn-open>.sn-l .sn-car{transform:translateY(2px) rotate(-135deg)}
 .sn-menu{display:none;position:absolute;top:100%;left:0;min-width:280px;margin:6px 0 0;padding:6px;list-style:none;background:#fff;color:#1F1A1E;border-radius:10px;box-shadow:0 14px 34px rgba(31,26,30,.25)}
@@ -56,7 +66,7 @@
     const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const cur = id => id === page ? ' aria-current="page"' : '';
     const li = items.map(it => {
-      if (!it.children) return `<li><a class="sn-l" href="${it.href}"${cur(it.id)}>${esc(it.label)}</a></li>`;
+      if (!it.children) return `<li><a class="sn-l${it.badge ? ' has-badge' : ''}" href="${it.href}"${cur(it.id)}${it.badge ? ` aria-label="${esc(it.label)}, ${it.badge} new signals"` : ''}>${esc(it.label)}${it.badge ? `<span class="sn-badge" aria-hidden="true">${it.badge}</span>` : ''}</a></li>`;
       const inside = it.children.some(c => c.id === page);
       return `<li class="sn-dd"><button class="sn-l" type="button" aria-expanded="false" aria-controls="sn-m-${it.id}"${inside ? ' aria-current="page"' : ''}>${esc(it.label)}<i class="sn-car" aria-hidden="true"></i></button>`
         + `<ul class="sn-menu" id="sn-m-${it.id}">` + it.children.map(c => `<li><a href="${c.href}"${cur(c.id)}>${esc(c.label)}<small>${esc(c.note)}</small></a></li>`).join('') + `</ul></li>`;
