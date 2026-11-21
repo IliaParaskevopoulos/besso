@@ -12,11 +12,11 @@
    PICTURE: the overview strip of five cards with threat meters is the first thing seen.
    COLOUR and TYPE: Byzantine purple #702963, near-black #1F1A1E, tint #F6F1F5; Montserrat.
    LAYOUT: header band, overview strip, tabs, one card at a time; win/lose side by side. */
-:root{color-scheme:light dark;
---bg:light-dark(#ffffff,#1F1A1E);--ink:light-dark(#1F1A1E,#F3ECF1);--mut:light-dark(#5f5560,#b9adb6);
+:root{color-scheme:light;
+--bg:light-dark(#FAF7F9,#1F1A1E);--ink:light-dark(#1F1A1E,#F3ECF1);--mut:light-dark(#5f5560,#b9adb6);
 --tint:light-dark(#F6F1F5,#2a2128);--line:light-dark(#e4d9e1,#3d313a);--pur:light-dark(#702963,#d59ac7);
 --purbg:#702963;--hl:light-dark(#f1e3ed,#3a2535)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:light}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Montserrat,system-ui,sans-serif;overflow-x:clip}
 .band{padding:clamp(24px,4vw,52px) max(5vw,16px)}
