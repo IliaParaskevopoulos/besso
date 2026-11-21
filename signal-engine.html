@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TIM MVP · Trade radar</title>
+<title>Signal Engine · besso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -99,10 +99,10 @@ body.no-ai #newBtn, body.no-ai #dAI{display:none}
 </style>
 </head>
 <body>
-<script src="site.js" data-page="tim"></script>
+<script src="site.js" data-page="signal"></script>
 
 <header>
-  <h1>Trade Signal Engine <small>Trade, tariff and regulatory triggers → affected accounts → campaigns that launch while the topic is live</small></h1>
+  <h1>Signal Engine <small>Trade, tariff and regulatory triggers → affected accounts → campaigns that launch while the topic is live</small></h1>
   <span class="ai-status" id="aiStatus"><span class="spin"></span>Connecting AI…</span>
 </header>
 
@@ -113,7 +113,7 @@ body.no-ai #newBtn, body.no-ai #dAI{display:none}
   <div><b>4 · Score</b>Severity × exposure × fit × freshness</div>
   <div><b>5 · Activate</b>AI-drafted outreach, approved by a human</div>
 </div>
-<div class="banner"><b>Real data, as of 18 Nov 2026.</b> Each event links to its source. The account book lists real companies, but their exposure profiles (production countries, product codes, markets, suppliers) are estimates from public information, so check them before any outreach. CRM fields (tier, stage, owner) stay empty until you import your CRM export.</div>
+<div class="banner"><b>Real data, as of 21 Nov 2026.</b> Each event links to its source. The account book lists real companies that fit besso's ICPs (food and beverage, chemicals and agri-science, mid-size exporters), but their exposure profiles (production countries, product codes, markets, suppliers) are estimates from public information, so check them before any outreach. Accounts marked Customer are named as besso customers in public sources; tier and owner stay empty until you import your CRM export.</div>
 
 <nav>
   <button class="on" data-v="signals">Signals</button>
@@ -179,15 +179,15 @@ body.no-ai #newBtn, body.no-ai #dAI{display:none}
       <ol>
         <li><b>Intake:</b> paste any tariff notice, trade agreement text or regulation. The AI turns it into a structured event: type, stage, direction (threat / opportunity / compliance), imposing jurisdiction, affected origins, HS headings, effective date, severity and the sentence that supports it.</li>
         <li><b>Matching:</b> each account has an exposure profile: the HS codes it sells, the HS codes it buys (inputs), where it produces, where its suppliers are, and where it sells. The engine matches HS headings (or whole chapters, where a measure covers a chapter) and the trade corridor, then labels each account <i>exporter</i>, <i>importer</i>, <i>buyer of inputs</i> or <i>seller in market</i>. It also applies each measure's carve-outs: the UK exemption and the 15% cap in the US pharma tariff, the exclusion of generics, and pharma's exemption from Section 301.</li>
-        <li><b>Scoring:</b> <code>score = severity × HS match × corridor × ICP fit × pipeline stage × campaign window</code>. The campaign window is open right after a story breaks (it halves every 14 days) and opens again as the next milestone approaches, such as an effective date, a signature or an expiry. That is why the polysilicon measure from August is hot again now. Tier and stage count only once they come from your CRM.</li>
+        <li><b>Scoring:</b> <code>score = severity × HS match × corridor × ICP fit × pipeline stage × campaign window</code>. The campaign window is open right after a story breaks (it halves every 14 days) and opens again as the next milestone approaches, such as an effective date, a signature or an expiry. That is why an agreement signed weeks ago heats up again as its start date approaches. Tier and stage count only once they come from your CRM.</li>
         <li><b>Activation:</b> for any account, the AI drafts an impact note, a campaign angle, an email and a LinkedIn post. The tone leads with help, not fear. A person edits and approves the draft before it goes to the queue.</li>
       </ol>
     </div>
     <div class="panel">
       <h2>Data in this version</h2>
       <ol>
-        <li><b>Events:</b> nine real trade and regulatory measures, researched on 18 Nov 2026 from official and professional sources (Federal Register, Global Trade Alert, S&amp;P Global, law-firm alerts, NutraIngredients). Each one links to its source. The HS headings are the engine's mapping of each measure's scope, and every event explains its mapping.</li>
-        <li><b>Accounts:</b> 24 real life-sciences, chemicals and machinery companies with a Swiss or EU base. Their exposure profiles are estimated from public company information. In production these come from trade data (Panjiva, ImportGenius) and the CRM.</li>
+        <li><b>Events:</b> six real trade measures, researched on 21 Nov 2026 from official and professional sources (Council of the EU, European Commission, EUobserver, Switzerland Global Enterprise, Global Trade Alert, law-firm alerts), led by the EU–Indonesia CEPA signed today. Each one links to its source. The HS headings are the engine's mapping of each measure's scope, and every event explains its mapping.</li>
+        <li><b>Accounts:</b> 21 real companies that fit besso's three ICPs: food and beverage groups, chemicals and agri-science groups, and a Swiss mid-size exporter. Accounts named as besso customers in public sources are marked Customer. Their exposure profiles are estimated from public company information. In production these come from trade data (Panjiva, ImportGenius) and the CRM.</li>
       </ol>
     </div>
     <div class="panel">
@@ -223,51 +223,36 @@ body.no-ai #newBtn, body.no-ai #dAI{display:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const TODAY = new Date("2026-11-18T12:00:00");
+const TODAY = new Date("2026-11-21T12:00:00");
 const EU = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE'];
 
 /* Real events, researched 18 Nov 2026. Each links to its source. HS headings are the engine's mapping of the measure's product scope. */
 const REAL_EVENTS = [
-  {id:"cn-ree", title:"China extends pause on expanded rare-earth export controls only to 10 Jan 2027",
-   type:"export_control", stage:"in force", direction:"threat", imposer:"CN", origins:[],
-   hs:["2805","2846","8505","3801","8507"], published:"2026-11-09", milestone:{date:"2027-01-10",label:"Pause expires"},
-   severity:3, source:"S&P Global Commodity Insights", url:"https://www.spglobal.com/energy/en/news-research/latest-news/metals/110926-china-extends-rare-earth-export-suspension-to-january-2027",
-   summary:"On 9 November China's Ministry of Commerce extended the suspension of its October 2025 export controls (more rare earths, processing technology, lithium batteries, graphite anode material) by two months only, to 10 January 2027. Licensing for seven medium and heavy rare earths introduced in April 2025, including gadolinium, terbium and dysprosium, stays in force.",
-   hs_note:"Rare-earth metals 2805, rare-earth compounds 2846, permanent magnets 8505, graphite 3801, Li-ion batteries 8507. Matched against what accounts buy, not what they sell."},
-  {id:"us-polysilicon", title:"US: Section 232 price floors and 15% tariff on polysilicon and solar derivatives start 4 Dec 2026",
-   type:"tariff", stage:"adopted", direction:"threat", imposer:"US", origins:[],
-   hs:["2804","3818","8541"], published:"2026-08-06", effective_date:"2026-12-04", milestone:{date:"2026-12-04",label:"Takes effect"},
-   severity:4, origin_notes:{GB:"price floor; +10% on derivatives"}, default_note:"price floor; +15% on derivatives",
-   source:"Hunton Andrews Kurth", url:"https://www.hunton.com/insights/legal/us-imposes-new-tariffs-and-minimum-import-prices-on-polysilicon-and-solar-products",
-   summary:"From 4 December 2026, imported polysilicon and its derivatives must meet minimum import prices ($21/kg polysilicon, $100/kg ingots and wafers, $0.22/W cells, $0.38/W modules). Downstream derivatives (not raw polysilicon) also pay an extra 15% Section 232 duty (10% for UK products).",
-   hs_note:"Silicon 2804, doped wafers 3818, solar cells and modules 8541."},
+  {id:"id-eu-cepa", title:"EU–Indonesia CEPA signed in Brussels: Indonesia removes duties on EU dairy, processed food and chemicals",
+   type:"trade_agreement", stage:"signed · provisional application next", direction:"opportunity", imposer:"ID", origins:["EU"],
+   hs:["0401","0402","0403","0404","0405","0406","1704","1806","1901","1905","2103","2106","28","29","32","33","34","38","84"], published:"2026-11-21", milestone:{date:"2027-01-15",label:"Target start of application (Q1 2027, estimated date)"},
+   severity:4, source:"Council of the EU, via Lovguiden", url:"https://www.lovguiden.dk/en/det-offentlige/raadet-for-den-europaeiske-union/2026-11-18-council-approves-signing-of-eu-trade-and-investment-agreements-with-indonesia",
+   summary:"On 18 November 2026 the Council authorised the signature and provisional application of the EU–Indonesia CEPA, and the agreement is signed in Brussels on 21 November. Tariffs go on more than 98% of tariff lines, 80% of them at entry into force and the rest over five years. Indonesia cuts current tariffs of up to 25% on chemicals and up to 15% on machinery, and removes duties on EU dairy (milk powders, cheese, infant formula), meat and processed food. Indonesia aims to start applying it in the first quarter of 2027. New rules of origin mean every EU shipment must be requalified to claim the preference.",
+   evidence:"CEPA removes tariffs on over 98% of tariff lines; 80% will be liberalised already at entry into force.",
+   hs_note:"Dairy 0401–0406, processed food (1704, 1806, 1901, 1905, 2103, 2106), chemical chapters 28, 29, 32, 33, 34, 38 and machinery 84. Matched against what accounts make in the EU and sell into Indonesia. Tariff figures: European Commission factsheet; signing date: Indonesian Ministry of Trade."},
+  {id:"eu-id-cepa", title:"EU–Indonesia CEPA, EU side: duty-free quotas for Indonesian palm oil and palm kernel oil; most Indonesian goods enter duty-free",
+   type:"trade_agreement", stage:"signed · provisional application next", direction:"opportunity", imposer:"EU", origins:["ID"], match:"inputs",
+   hs:["1511","1513","1516","1801","1803","1804","1805","0901","0905","0908","3301","3823"], published:"2026-11-21", milestone:{date:"2027-01-15",label:"Target start of application (Q1 2027, estimated date)"},
+   severity:4, source:"EUobserver, with the European Commission factsheet", url:"https://euobserver.com/stakeholder/ar658b12ac",
+   summary:"At entry into force 1.9 million tonnes of crude and refined Indonesian palm oil enter the EU tariff-free, rising to 2.479 million tonnes from year nine, plus 140,000 tonnes of palm kernel oil. Against EU tariffs of up to 12.8%, that is a real margin for refined fractions. Indonesia also grants an export-duty-free quota for crude palm and palm kernel oil. Around 80% of Indonesian exports, including palm oil, cocoa and coffee, gain duty-free access, with a palm oil protocol on sustainability alongside the EU deforestation rules.",
+   hs_note:"Matched against what EU-based accounts BUY from Indonesia: palm oil 1511, palm kernel oil 1513, fats 1516, cocoa 1801–1805, coffee 0901, vanilla and spices 0905/0908, essential oils 3301, fatty acids 3823. Quota figures: EUobserver analysis; export-duty quota: European Commission factsheet."},
+  {id:"ch-cn-fta", title:"Switzerland and China sign upgraded FTA: 77.5% of Swiss exports duty-free at entry into force, direct-transport rule relaxed",
+   type:"trade_agreement", stage:"signed · awaiting ratification", direction:"opportunity", imposer:"CN", origins:["CH"],
+   hs:["04","17","18","19","21","28","29","32","33","34","38","84"], published:"2026-10-30",
+   severity:4, source:"Switzerland Global Enterprise", url:"https://www.s-ge.com/export/en/articles/news/update-switzerland-china-free-trade-agreement",
+   summary:"The upgraded Switzerland–China FTA would make about 77.5% of Swiss exports to China duty-free on entry into force, and up to 99.8% in the medium term. Preferential treatment will no longer always require direct shipping between the two countries, which changes origin eligibility for goods routed through hubs. Both sides still have to ratify it.",
+   hs_note:"Food chapters 04, 17, 18, 19, 21, chemical chapters 28, 29, 32, 33, 34, 38 and machinery 84, made in Switzerland and sold in China. EU sites do not qualify (Swiss origin only)."},
   {id:"eu-in-fta", title:"EU–India FTA heads to signature: India's tariffs of up to 22% on EU chemicals largely go at entry into force",
    type:"trade_agreement", stage:"awaiting signature", direction:"opportunity", imposer:"IN", origins:["EU"],
    hs:["28","29","32","34","38","3304"], published:"2026-09-11", milestone:{date:"2026-12-15",label:"Signature expected (Dec 2026, estimated date)"},
    severity:4, source:"Conventus Law", url:"https://conventuslaw.com/report/the-india-eu-free-trade-agreement-a-landmark-deal-moves-toward-finalisation/",
    summary:"On 11 September 2026 the Commission asked the Council to authorise signing the FTA concluded in January. Signature is expected in December 2026 and entry into force in early 2027. India's tariffs of up to 22% on EU chemicals are largely removed at entry into force; cosmetics tariffs are phased out over 5–7 years.",
    hs_note:"Chemical chapters 28, 29, 32, 34, 38 and cosmetics 3304. Swiss sites do not qualify (EU origin only)."},
-  {id:"us-robotics", title:"US: Section 232 finding on robotics and industrial machinery. Negotiations first, no tariff yet",
-   type:"tariff", stage:"proposed", direction:"threat", imposer:"US", origins:[],
-   hs:["8479","8428","8456","8457","8458","8459","8460","8461","8462","8466"], published:"2026-10-28", milestone:{date:"2027-04-26",label:"Negotiation report due"},
-   severity:3, default_note:"tariff possible, rate not set",
-   source:"Mayer Brown", url:"https://www.mayerbrown.com/en/insights/publications/2026/10/president-trump-issues-proclamation-on-imports-of-robotics-industrial-machinery-and-their-parts-and-components",
-   summary:"The President agreed with Commerce that imports of robotics, industrial machinery and their parts threaten US national security, and ordered negotiations with trading partners instead of immediate duties. Commerce and USTR report back within 180 days (around 26 April 2027); tariffs, quotas or fees remain possible.",
-   hs_note:"Industrial robots and machines 8479, handling equipment 8428, machine tools 8456–8462, tool parts 8466."},
-  {id:"us-pharma-232", title:"US: Section 232 tariffs on patented medicines and APIs in force (up to 100%; 15% cap for EU, CH, JP, KR)",
-   type:"tariff", stage:"in force", direction:"threat", imposer:"US", origins:[], exempt_origins:["GB"], exempt_tags:["generics"],
-   hs:["3002","3004","2933","2934","2937","2941"], published:"2026-04-09", effective_date:"2026-07-31",
-   severity:5, origin_notes:{EU:"15% all-in cap",CH:"15% all-in cap",JP:"15% all-in cap",KR:"15% all-in cap"}, default_note:"up to 100%",
-   source:"Federal Register 2026-06956", url:"https://www.federalregister.gov/d/2026-06956",
-   summary:"Patented medicines, biologics, APIs and key starting materials pay up to 100% from 31 July 2026 (listed large companies) and 29 September 2026 (all others). EU, Swiss, Japanese and Korean products are capped at 15% including the normal duty, UK products pay 0%, approved US onshoring plans pay 20%, and generics and biosimilars are excluded for now.",
-   hs_note:"Biologics 3002, medicaments 3004, API headings 2933, 2934, 2937, 2941. Accounts tagged 'generics' are excluded."},
-  {id:"us-generics", title:"US: announced phased tariff on generic drugs (0% until Aug 2028, then 100%)",
-   type:"tariff", stage:"announced", direction:"threat", imposer:"US", origins:[], only_tags:["generics"],
-   hs:["3004","3002","2941","2933","2942"], published:"2026-07-22", milestone:{date:"2028-08-01",label:"100% tariff would start"},
-   severity:3, default_note:"0% now, 100% from Aug 2028",
-   source:"PwC Tax Insights", url:"https://www.pwc.com/us/en/tax-services/publications/insights/assets/pwc-proposed-tariffs-on-generic-pharma-what-companies-should-know.pdf",
-   summary:"A July 2026 announcement set out a phased Section 232 framework for imported generics: no additional duty for a two-year transition from 1 August 2026, 100% from 1 August 2028, and higher after that. It has been announced but not yet signed.",
-   hs_note:"Only accounts tagged 'generics' are matched."},
   {id:"us-301-fl", title:"US: Section 301 forced-labour tariffs of 10–12.5% on goods from 60 economies",
    type:"tariff", stage:"in force", direction:"threat", imposer:"US", origins:["EU","CH","JP","KR","CN","VN","BR","IL","AU","CA","MX","IN","GB"],
    hs:["*"], exempt_hs:["30","2804","3818","8541"], published:"2026-07-24", effective_date:"2026-07-24",
@@ -280,42 +265,33 @@ const REAL_EVENTS = [
    hs:["28","29","38","39","84","85","90"], published:"2026-06-25",
    severity:3, source:"Barnes Richardson", url:"https://www.barnesrichardson.com/european-union-implements-us-trade-deal",
    summary:"On 25 June 2026 the EU adopted the regulations implementing its 2025 framework deal with the US. Tariffs on US industrial goods are removed, some agricultural and seafood products get preferential access, and a safeguard clause lets the EU reimpose duties.",
-   hs_note:"Main industrial chapters: chemicals 28, 29, 38; plastics 39; machinery 84; electrical 85; instruments 90. Pharma (30) is already duty-free."},
-  {id:"eu-mpl", title:"EU: consultation on EU-wide maximum levels for vitamins and minerals in supplements",
-   type:"regulation", stage:"consultation", direction:"compliance", imposer:"EU", origins:[],
-   hs:["2106","2936"], published:"2026-07-17", milestone:{date:"2028-03-31",label:"Adoption planned (Q1 2028)"},
-   severity:3, source:"NutraIngredients", url:"https://www.nutraingredients.com/Article/2026/07/17/mid-year-regulatory-round-up-updates-from-europe/",
-   summary:"In June 2026 the Commission opened a call for evidence and a public consultation on harmonised maximum permitted levels for vitamins and minerals in supplements and fortified foods. The final rules are planned for Q1 2028, and consultants warn that high-dose products may need reformulating and relabelling.",
-   hs_note:"Supplement preparations 2106, vitamins 2936."}
+   hs_note:"Main industrial chapters: chemicals 28, 29, 38; plastics 39; machinery 84; electrical 85; instruments 90. Pharma (30) is already duty-free."}
 ];
 
 /* Real companies. Exposure profiles are estimates from public company information (HQ, main production countries, product lines). CRM fields stay empty until a CRM export is imported. */
 const REAL_ACCOUNTS = [
-  {name:"Roche", hq:"CH", url:"https://www.roche.com", segment:"Pharma & diagnostics", hs:["3002","3004","3822"], origins:["CH","DE","US"], sources:[], inputs:[], markets:["US","EU","CN","JP"], tags:[]},
-  {name:"Novartis", hq:"CH", url:"https://www.novartis.com", segment:"Innovative medicines", hs:["3002","3004"], origins:["CH","AT","SI","US"], sources:[], inputs:[], markets:["US","EU","CN","JP"], tags:[]},
-  {name:"Lonza", hq:"CH", url:"https://www.lonza.com", segment:"Pharma & biotech CDMO", hs:["3002","2933","2934"], origins:["CH","US"], sources:[], inputs:[], markets:["US","EU","JP"], tags:[]},
-  {name:"Siegfried", hq:"CH", url:"https://www.siegfried.ch", segment:"API & drug-product CDMO", hs:["2933","2934","3004"], origins:["CH","DE","ES","FR","MT","US","CN"], sources:[], inputs:[], markets:["US","EU"], tags:[]},
-  {name:"Bachem", hq:"CH", url:"https://www.bachem.com", segment:"Peptide & oligonucleotide APIs", hs:["2937","2934"], origins:["CH","US","GB"], sources:[], inputs:[], markets:["US","EU","JP"], tags:[]},
-  {name:"Sandoz", hq:"CH", url:"https://www.sandoz.com", segment:"Generics & biosimilars", hs:["3004","2941","3002"], origins:["AT","SI","DE"], sources:[], inputs:[], markets:["US","EU"], tags:["generics"]},
-  {name:"Dr. Reddy's Laboratories", hq:"IN", url:"https://www.drreddys.com", segment:"Generics & APIs", hs:["3004","2933","2942"], origins:["IN"], sources:[], inputs:[], markets:["US","EU","IN"], tags:["generics"]},
-  {name:"Sun Pharmaceutical", hq:"IN", url:"https://sunpharma.com", segment:"Generics & specialty pharma", hs:["3004","2933"], origins:["IN"], sources:[], inputs:[], markets:["US","IN"], tags:["generics"]},
-  {name:"Divi's Laboratories", hq:"IN", url:"https://www.divislabs.com", segment:"APIs & custom synthesis", hs:["2933","2942"], origins:["IN"], sources:[], inputs:[], markets:["US","EU"], tags:[]},
-  {name:"Bayer", hq:"DE", url:"https://www.bayer.com", segment:"Pharma, consumer health, crop science", hs:["3004","3006","2106","3808"], origins:["DE"], sources:["CN"], inputs:["2846"], markets:["US","EU","CN","IN"], tags:[]},
-  {name:"Guerbet", hq:"FR", url:"https://www.guerbet.com", segment:"Contrast media", hs:["3006"], origins:["FR"], sources:["CN"], inputs:["2846"], markets:["US","EU","JP"], tags:[]},
-  {name:"dsm-firmenich", hq:"CH", url:"https://www.dsm-firmenich.com", segment:"Vitamins, nutrition & aroma ingredients", hs:["2936","2106","3302"], origins:["CH","FR","DE","NL","CN"], sources:[], inputs:[], markets:["US","EU","CN","IN"], tags:[]},
-  {name:"Nestlé Health Science", hq:"CH", url:"https://www.nestlehealthscience.com", segment:"Supplements & medical nutrition", hs:["2106"], origins:["CH","US","DE"], sources:[], inputs:[], markets:["US","EU","CN"], tags:[]},
-  {name:"BASF", hq:"DE", url:"https://www.basf.com", segment:"Chemicals incl. vitamins & crop protection", hs:["2936","2905","3907","3808"], origins:["DE","BE","US","CN"], sources:[], inputs:[], markets:["US","EU","IN","CN"], tags:[]},
-  {name:"Clariant", hq:"CH", url:"https://www.clariant.com", segment:"Specialty chemicals & catalysts", hs:["3402","3815","3824"], origins:["CH","DE","US","IN","CN"], sources:[], inputs:[], markets:["EU","US","IN","CN"], tags:[]},
-  {name:"Evonik", hq:"DE", url:"https://www.evonik.com", segment:"Specialty chemicals", hs:["2930","2803","3906"], origins:["DE","BE","US"], sources:[], inputs:[], markets:["EU","US","IN","CN"], tags:[]},
-  {name:"Wacker Chemie", hq:"DE", url:"https://www.wacker.com", segment:"Polysilicon & silicones", hs:["2804","3910"], origins:["DE","US"], sources:[], inputs:[], markets:["US","EU","CN"], tags:[]},
-  {name:"Vacuumschmelze (VAC)", hq:"DE", url:"https://vacuumschmelze.com", segment:"Rare-earth permanent magnets", hs:["8505"], origins:["DE","US"], sources:["CN"], inputs:["2805","2846"], markets:["EU","US","CN"], tags:[]},
-  {name:"ABB", hq:"CH", url:"https://www.abb.com", segment:"Electrification & motion", hs:["8501","8504","8535","8537"], origins:["CH","SE","FI","CN","US"], sources:["CN"], inputs:["8505"], markets:["US","EU","CN","IN"], tags:[]},
-  {name:"KUKA", hq:"DE", url:"https://www.kuka.com", segment:"Industrial robots", hs:["8479"], origins:["DE","CN","HU"], sources:["CN"], inputs:["8505"], markets:["US","EU","CN"], tags:[]},
-  {name:"Stäubli", hq:"CH", url:"https://www.staubli.com", segment:"Robotics & connectors", hs:["8479","8536"], origins:["CH","FR","DE"], sources:[], inputs:[], markets:["US","EU","CN"], tags:[]},
-  {name:"Bühler", hq:"CH", url:"https://www.buhlergroup.com", segment:"Food & materials processing machinery", hs:["8437","8438","8474","8479"], origins:["CH","DE","CN","IN"], sources:[], inputs:[], markets:["US","EU","IN","CN"], tags:[]},
-  {name:"UNITED GRINDING Group", hq:"CH", url:"https://www.grinding.ch", segment:"Grinding & machine tools", hs:["8460","8456","8466"], origins:["CH","DE","US"], sources:[], inputs:[], markets:["US","EU","CN"], tags:[]},
-  {name:"DMG MORI", hq:"DE/JP", url:"https://www.dmgmori.com", segment:"Machine tools", hs:["8457","8458","8466"], origins:["DE","JP","IT","PL"], sources:[], inputs:[], markets:["US","EU","CN"], tags:[]}
-].map(a=>({...a, tier:"", stage:"", owner:""}));
+  {name:"Nestlé", hq:"CH", url:"https://www.nestle.com", segment:"Food & beverage", hs:["0402","1806","1901","2101","2106"], origins:["CH","FR","DE","ES","NL"], sources:["ID","CI","BR","VN"], inputs:["1801","1804","0901","1511"], markets:["EU","US","CN","ID","IN"], tags:["ICP1"]},
+  {name:"Unilever", hq:"GB", url:"https://www.unilever.com", segment:"Food & home and personal care", hs:["2103","2105","3401","3305"], origins:["NL","DE","GB","PL"], sources:["ID","MY"], inputs:["1511","1513","3823"], markets:["EU","US","ID","IN"], tags:["ICP1"], stage:"Customer"},
+  {name:"Danone", hq:"FR", url:"https://www.danone.com", segment:"Dairy, infant & medical nutrition", hs:["0402","0403","1901","2201"], origins:["FR","NL","IE","ES"], sources:[], inputs:[], markets:["EU","ID","CN","US"], tags:["ICP1"], stage:"Customer"},
+  {name:"FrieslandCampina", hq:"NL", url:"https://www.frieslandcampina.com", segment:"Dairy", hs:["0402","0404","0406","1901"], origins:["NL","DE","BE"], sources:[], inputs:[], markets:["EU","ID","CN"], tags:["ICP1"]},
+  {name:"Ferrero", hq:"LU", url:"https://www.ferrero.com", segment:"Confectionery", hs:["1806","1704","1905"], origins:["IT","DE","PL","BE"], sources:["MY","ID","TR"], inputs:["1511","1804","1805","0802"], markets:["EU","US","CN"], tags:["ICP1"]},
+  {name:"Barry Callebaut", hq:"CH", url:"https://www.barry-callebaut.com", segment:"Cocoa & chocolate ingredients", hs:["1803","1804","1805","1806"], origins:["BE","FR","CH","DE"], sources:["ID","CI","GH"], inputs:["1801"], markets:["EU","US","ID","CN"], tags:["ICP1"]},
+  {name:"Lindt & Sprüngli", hq:"CH", url:"https://www.lindt-spruengli.com", segment:"Premium chocolate", hs:["1806"], origins:["CH","DE","FR","IT"], sources:["GH","EC"], inputs:["1801","1804"], markets:["EU","US","CN"], tags:["ICP1"]},
+  {name:"JDE Peet's", hq:"NL", url:"https://www.jdepeets.com", segment:"Coffee & tea", hs:["0901","2101"], origins:["NL","DE","FR","PL"], sources:["BR","VN","ID","CO"], inputs:["0901"], markets:["EU","US","ID"], tags:["ICP1"]},
+  {name:"Heineken", hq:"NL", url:"https://www.theheinekencompany.com", segment:"Beer", hs:["2203","1107"], origins:["NL","FR","PL","IT"], sources:[], inputs:["1003"], markets:["EU","US","ID"], tags:["ICP1"], stage:"Customer"},
+  {name:"AB InBev", hq:"BE", url:"https://www.ab-inbev.com", segment:"Beer", hs:["2203"], origins:["BE","DE","GB"], sources:[], inputs:["1003","1107"], markets:["EU","US","CN"], tags:["ICP1"], stage:"Customer"},
+  {name:"Emmi", hq:"CH", url:"https://group.emmi.com", segment:"Dairy", hs:["0406","0403"], origins:["CH","ES"], sources:[], inputs:[], markets:["EU","US","CN"], tags:["ICP1"]},
+  {name:"AAK", hq:"SE", url:"https://www.aak.com", segment:"Plant-based oils & fats", hs:["1516","1517","1513"], origins:["SE","DK","NL"], sources:["MY","ID"], inputs:["1511","1513"], markets:["EU","US"], tags:["ICP1"]},
+  {name:"BASF", hq:"DE", url:"https://www.basf.com", segment:"Chemicals & crop protection", hs:["2905","2936","3402","3808","3823"], origins:["DE","BE","ES"], sources:["MY","ID"], inputs:["1513","3823"], markets:["EU","US","CN","ID","IN"], tags:["ICP2"], stage:"Customer"},
+  {name:"Syngenta", hq:"CH", url:"https://www.syngenta.com", segment:"Crop protection & seeds", hs:["3808","1209"], origins:["CH","FR","GB"], sources:[], inputs:[], markets:["EU","US","CN","ID","IN"], tags:["ICP2"], stage:"Customer"},
+  {name:"Clariant", hq:"CH", url:"https://www.clariant.com", segment:"Specialty chemicals", hs:["3402","3824","2905"], origins:["CH","DE","ES"], sources:["ID","MY"], inputs:["3823","1513"], markets:["EU","US","IN","CN","ID"], tags:["ICP2"]},
+  {name:"Evonik", hq:"DE", url:"https://www.evonik.com", segment:"Specialty chemicals", hs:["2930","3402","3906"], origins:["DE","BE"], sources:["ID","MY"], inputs:["3823","1513"], markets:["EU","US","IN","ID","CN"], tags:["ICP2"]},
+  {name:"Henkel", hq:"DE", url:"https://www.henkel.com", segment:"Adhesives & consumer brands", hs:["3402","3401","3506"], origins:["DE","ES","FR"], sources:["ID","MY"], inputs:["3823"], markets:["EU","US","ID","CN"], tags:["ICP2"]},
+  {name:"Croda", hq:"GB", url:"https://www.croda.com", segment:"Specialty ingredients", hs:["3823","3402","3304"], origins:["GB","NL","US"], sources:["ID","MY"], inputs:["1513","3823"], markets:["EU","US","ID"], tags:["ICP2"]},
+  {name:"Givaudan", hq:"CH", url:"https://www.givaudan.com", segment:"Flavours & fragrances", hs:["3302","3301"], origins:["CH","FR","DE"], sources:["ID","MG","IN"], inputs:["3301","0905"], markets:["EU","US","CN","ID"], tags:["ICP2"]},
+  {name:"Symrise", hq:"DE", url:"https://www.symrise.com", segment:"Flavours, fragrances & nutrition", hs:["3302","3301"], origins:["DE","FR"], sources:["ID","MG"], inputs:["3301","0905"], markets:["EU","US","ID"], tags:["ICP2"]},
+  {name:"Bühler", hq:"CH", url:"https://www.buhlergroup.com", segment:"Food processing machinery", hs:["8437","8438","8474"], origins:["CH","DE"], sources:[], inputs:[], markets:["EU","US","CN","ID","IN"], tags:["ICP3"]}
+].map(a=>({tier:"", owner:"", ...a, stage:a.stage||""}));
 
 let events = JSON.parse(JSON.stringify(REAL_EVENTS));
 let accounts = JSON.parse(JSON.stringify(REAL_ACCOUNTS));
@@ -397,7 +373,7 @@ function matchEvent(ev){
     const tags = acc.tags||[];
     if(ev.only_tags && !ev.only_tags.some(t=>tags.includes(t))) continue;
     if(ev.exempt_tags && ev.exempt_tags.some(t=>tags.includes(t))) continue;
-    const codes = ev.type==="export_control" ? acc.inputs : acc.hs;
+    const codes = (ev.type==="export_control" || ev.match==="inputs") ? acc.inputs : acc.hs;
     const h = hsMatch(ev.hs, codes, ev.exempt_hs); if(!h.score) continue;
     const c = corridor(ev, acc); if(!c.score) continue;
     const fit = TIER[acc.tier] ?? 1, st = STAGE[acc.stage] ?? 1;
@@ -487,17 +463,30 @@ function render(){ renderEvents(); renderDetail(); renderMatches(); renderAccoun
 /* ---------- drawer / campaign ---------- */
 function templateDraft(ev, r){
   const a = r.acc; const sign = a.owner || "{your_name}";
-  const angle = ev.direction==="threat" ? "Cost-mitigation and supply-chain options" : ev.direction==="opportunity" ? "Market-entry and growth plan" : "Compliance readiness";
+  const CN_ = {ID:"Indonesia",IN:"India",CN:"China",EU:"the EU",US:"the US",CH:"Switzerland",GB:"the UK"};
+  const nm = c => CN_[c] || c;
+  const when = ev.effective_date ? "from "+fmtDate(ev.effective_date) : "once the agreement applies";
+  const importer = /importer/i.test(r.cor.role);
+  const entry = /market entry/i.test(r.cor.role);
+  const angle = ev.direction==="threat" ? "Cut the duty hit: check every lane for preferences you can still claim"
+    : importer ? "Lower landed cost on inputs, with origin claims you can defend"
+    : ev.direction==="opportunity" ? "Claim the new preference from day one" : "Compliance readiness";
+  const from = (ev.origins||[]).map(nm).join(", ");
   const impact = ev.direction==="threat"
-    ? `${a.name} looks exposed as ${(r.cor.role.charAt(0).toLowerCase()+r.cor.role.slice(1))}: its product lines in HS ${r.hs.hit} fall within the measure's scope${r.cor.note?" ("+r.cor.note+")":""}. Pricing, contracts and sourcing for ${ev.imposer}-bound business are likely under review${ev.effective_date?" around "+fmtDate(ev.effective_date):""}.`
+    ? `${a.name} exports products in HS ${r.hs.hit} into ${nm(ev.imposer)}${r.cor.note?" ("+r.cor.note+")":""}, so pricing, contracts and sourcing for that business are likely under review.`
+    : importer
+    ? `${a.name} buys HS ${r.hs.hit} from ${from} for its EU sites. Duty-free quotas and lower tariffs ${when} cut its landed cost, but only on shipments that meet the new rules of origin and are claimed correctly.`
     : ev.direction==="opportunity"
-    ? `${a.name} trades HS ${r.hs.hit} and qualifies as ${(r.cor.role.charAt(0).toLowerCase()+r.cor.role.slice(1))}. Lower duties from ${fmtDate(ev.effective_date)} improve price competitiveness in ${ev.imposer}.`
-    : `${a.name} sells HS ${r.hs.hit} into ${ev.imposer}. The new requirements will affect specifications, testing and documentation before ${fmtDate(ev.effective_date)}.`;
+    ? `${a.name} makes HS ${r.hs.hit} in ${from} and ${entry?"could start selling":"already sells"} in ${nm(ev.imposer)}. Lower duties ${when} improve its price position there, but only for products that meet the new rules of origin.`
+    : `${a.name} sells HS ${r.hs.hit} into ${nm(ev.imposer)}. The new requirements will affect specifications, testing and documentation.`;
+  const besso = ev.direction==="threat"
+    ? "besso checks every lane you ship against more than 1,250 trade rules and tariff schedules, so you can see which duties you can still avoid, with the legal basis for each saving."
+    : "New agreements are exactly where preferences get missed at first. besso screens your shipment and product data against the agreement and shows which lines qualify and what to claim, with the legal basis behind each saving.";
   return {
     impact_note: impact, angle,
-    email_subject: ev.direction==="threat" ? `What the new ${ev.imposer} duty means for your ${a.segment.toLowerCase()} business` : ev.direction==="opportunity" ? `Getting ahead of the lower duties in ${ev.imposer}` : `Preparing for the new ${ev.imposer} requirements`,
-    email_body: `Hi {first_name},\n\n${ev.summary} (Source: ${ev.source}.)\n\nFor ${a.name}, this matters because ${impact.charAt(0).toLowerCase()+impact.slice(1)}\n\nWe have put together a short briefing on the options companies in your position are looking at. Would a 20-minute call next week be useful?\n\nBest regards,\n${sign}`,
-    linkedin_post: `${ev.title}.\n\n${ev.summary}\n\nFor ${a.segment.toLowerCase()} companies, the next few weeks are about ${angle.toLowerCase()}. We have summarised what to check first. Comment or message us for the briefing.`
+    email_subject: ev.direction==="threat" ? `What the new ${ev.imposer} duty means for your ${a.segment.toLowerCase()} business` : importer ? `${ev.title.split(":")[0]}: what it saves on your inputs` : `${ev.title.split(":")[0]}: claim the preference from day one`,
+    email_body: `Hi {first_name},\n\n${ev.summary.split(". ").slice(0,2).join(". ")}. (Source: ${ev.source}.)\n\nWhy it matters for ${a.name}: ${impact}\n\n${besso}\n\nWorth a 20-minute look at one of your corridors next week?\n\nBest regards,\n${sign}`,
+    linkedin_post: `${ev.title}.\n\n${ev.summary.split(". ").slice(0,2).join(". ")}.\n\nFor ${a.segment.toLowerCase()} companies, the next weeks are about one thing: ${angle.toLowerCase()}. New rules of origin are where savings get missed first.`
   };
 }
 
@@ -654,7 +643,7 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
 
 /* ---------- AI hookup ---------- */
 function setAI(on){
-  $("#aiStatus").innerHTML = on ? "AI: <b>connected</b>" : "Static MVP · data as of 18 Nov 2026";
+  $("#aiStatus").innerHTML = on ? "AI: <b>connected</b>" : "Static MVP · data as of 21 Nov 2026";
   /* Outside claude.ai (e.g. GitHub Pages) there is no AI: hide the AI-only controls. */
   document.body.classList.toggle("no-ai", !on);
 }
