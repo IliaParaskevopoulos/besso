@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Messaging house · besso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pm.css">
+<style>
+/* VOICE: what everyone at besso says, in the same order, with proof; plain and calm.
+   IDEA: an architect's elevation of a house: roof, three pillars, foundation.
+   PICTURE: the house itself, drawn in flat shapes, filling the first screen under the title.
+   COLOUR and TYPE: Byzantine purple roof and foundation, white pillars on a tint ground; Montserrat.
+   LAYOUT: house first, then persona variants, pitches, boilerplate and word lists, each with a Copy button. */
+.house{margin-top:clamp(20px,3vw,32px)}
+.roof{position:relative;background:var(--purbg);color:#fff;clip-path:polygon(50% 0,100% 46%,100% 100%,0 100%,0 46%);padding:clamp(70px,9vw,110px) clamp(20px,6vw,90px) clamp(22px,3vw,30px);text-align:center}
+.roof small{display:block;font-size:13px;font-weight:600;color:#f0dceb;margin-bottom:8px}
+.roof p{margin:0 auto;font-size:clamp(19px,2.4vw,27px);line-height:1.3;font-weight:700;max-width:34ch;text-wrap:balance}
+.roof .tl{margin-top:12px;font-size:14px;color:#f0dceb;font-weight:500}
+.roofcp{display:flex;justify-content:center;margin-top:12px}
+.roofcp .cp{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.6vw,18px);background:var(--tint);padding:clamp(12px,1.6vw,18px)}
+.pil{background:var(--bg);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--pur)}
+.pil .no{font-size:12.5px;font-weight:600;color:var(--pur)}
+.pil h3{margin:0;font-size:clamp(19px,1.9vw,22px);line-height:1.2;text-wrap:balance}
+.pil p{margin:0;font-size:15px}
+.pil h4{margin:6px 0 0;font-size:13px;color:var(--mut);font-weight:600}
+.pil ul{margin:0;padding-inline-start:18px;font-size:14.5px}
+.pil li{margin:0 0 6px}
+.pil .feat{font-size:14px;color:var(--mut)}
+.pil .cp{align-self:flex-start;margin-top:auto}
+.found{background:var(--purbg);color:#fff;padding:clamp(18px,2.4vw,26px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr);gap:20px}
+.found h4{margin:0 0 6px;font-size:13px;color:#f0dceb;font-weight:600}
+.found p,.found li{margin:0;font-size:14.5px;line-height:1.5}
+.found ul{margin:0;padding-inline-start:18px}
+.found li{margin-bottom:4px}
+.found .src{color:#f0dceb}
+.ground{height:10px;background:light-dark(#4E1C45,#120e11);border-radius:0 0 6px 6px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.card .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.card h3{margin:0;font-size:18px;line-height:1.25}
+.card .lead{font-size:13px;font-weight:600;color:var(--pur)}
+.card dl{margin:0;display:grid;gap:8px}
+.card dt{font-size:13px;color:var(--mut);font-weight:600}
+.card dd{margin:0;font-size:15px}
+.pitch{border-left:4px solid var(--pur);padding:4px 0 4px 16px;margin:0 0 22px}
+.pitch .top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px}
+.pitch h3{margin:0;font-size:17px}
+.pitch p{margin:0 0 6px;max-width:75ch}
+.words{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.words ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.words li{background:var(--tint);border-radius:8px;padding:10px 12px;font-size:15px}
+.words li span{display:block;font-size:13px;color:var(--mut)}
+.asm{background:var(--tint);border-radius:12px;padding:16px 18px;margin-top:20px;font-size:14.5px}
+.asm ul{margin:6px 0 0;padding-inline-start:18px}
+@media(max-width:900px){.pillars{grid-template-columns:minmax(0,1fr)}.found{grid-template-columns:minmax(0,1fr)}.cards,.words{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<script src="site.js" data-page="messaging"></script>
+<header class="band"><div class="wrap">
+<p class="kick">Product Marketing · Messaging house</p>
+<h1>What everyone at besso says, in what order, and the proof behind it</h1>
+<p class="lead">Built from the besso positioning: one core message, three value pillars with proof, and a foundation for brand and tone. Below the house: versions for each buyer, pitches, boilerplate and the words to use.</p>
+</div></header>
+
+<main class="band" style="padding-top:0"><div class="wrap">
+<div class="house" aria-label="Messaging house">
+<div class="roof">
+<small>Core message</small>
+<p id="roofText">besso keeps finding the duty global food and drink groups overpay, and backs every saving with its legal basis.</p>
+<div class="tl">Taglines: "Duty you no longer overpay." · "Always-on savings, legally checked."</div>
+<div class="roofcp"><button class="cp" type="button" data-copy="roofText">Copy</button></div>
+</div>
+<div class="pillars" id="pillars"></div>
+<div class="found">
+<div><h4>Who we are</h4><p>Founded in 2023 in Bern, Switzerland. An AI platform plus a trade-law research team, working across about 700 trade agreements. Raised €4.29M in October 2026. <span class="src">[S1, S2]</span></p></div>
+<div><h4>Brand personality</h4><ul><li><b>Precise,</b> not pedantic</li><li><b>Calm,</b> not alarmist about tariffs</li><li><b>Candid,</b> not salesy about savings</li></ul></div>
+<div><h4>Tone of voice</h4><ul><li>Do lead with money and proof. Don't lead with "AI".</li><li>Do name the rule, the lane, the number. Don't speak in generalities.</li><li>Do say what besso doesn't do. Don't overpromise on filing or legal advice.</li></ul></div>
+</div>
+<div class="ground"></div>
+</div>
+<div class="asm"><b>Assumptions and gaps.</b> Built without besso's input, from public sources.
+<ul><li>besso's savings and ROI figures are self-reported; they are labelled as such.</li><li>No named customer savings case is public yet: <span class="gap">[Customer result needed]</span>.</li><li>Integration effort and hosting details are not public: <span class="gap">[Confirm with besso]</span>.</li></ul></div>
+
+<section class="s" id="personas">
+<h2 class="sec">Persona variants</h2>
+<p class="sub">Which pillar leads for each role in the buying committee, the line to open with, and the likely objection.</p>
+<div class="cards" id="personas-list"></div>
+</section>
+
+<section class="s" id="pitches">
+<h2 class="sec">Elevator pitches</h2>
+<p class="sub">The same story in the same order as the house: problem, what besso does, why besso, proof, ask.</p>
+<div id="pitch-list"></div>
+</section>
+
+<section class="s" id="boiler">
+<h2 class="sec">Boilerplate</h2>
+<p class="sub">For press releases, event listings and partner profiles.</p>
+<div id="boiler-list"></div>
+</section>
+
+<section class="s" id="words">
+<h2 class="sec">Words to use, words to avoid</h2>
+<div class="words">
+<div><h3 style="margin:0 0 10px;font-size:18px">Use</h3><ul id="use"></ul></div>
+<div><h3 style="margin:0 0 10px;font-size:18px">Avoid</h3><ul id="avoid"></ul></div>
+</div>
+</section>
+</div></main>
+
+<footer class="band"><div class="wrap">
+<h4>Sources</h4>
+<ol>
+<li value="1"><a href="https://www.startupresearcher.com/news/besso-raises-4-29-million-to-expand-ai-trade-compliance-platform">Startup Researcher: besso raises €4.29M (customers, 1,250+ regulations, missed-preference figures)</a> — Oct 2026</li>
+<li value="2"><a href="https://www.wto.org/english/tratop_e/dtt_e/aicasestudy/besso_e.htm">WTO AI case study: besso (method, ~700 agreements, US$40M case, limits)</a> — 2026</li>
+<li value="3"><a href="https://www.besso.com/how-it-works">besso.com: How it works</a> — Nov 2026</li>
+<li value="4"><a href="https://www.besso.com/our-impact">besso.com: Our impact (10–15x ROI and 25% capacity claims)</a> — Nov 2026</li>
+<li value="5"><a href="https://www.besso.com/about-us">besso.com: About us (team, academic and strategic advisors)</a> — Nov 2026</li>
+</ol>
+<p class="note">Same source numbering as the battlecards. Prepared by Ilia Paraskevopoulos with Claude; not official besso material.</p>
+</div></footer>
+
+<script>
+{
+const PIL=[
+ {h:'Find the duty you overpay, every quarter',m:'besso watches the trade rules and tariff schedules on every lane you ship, all the time, and flags a saving as soon as a rule allows it. Not once a year after a review.',
+  proof:['1,250+ trade regulations and tariff schedules monitored <span class="src">[S1]</span>','About 700 trade agreements screened, including annexes and footnotes <span class="src">[S2]</span>','One Swiss raw materials client: about US$40M a year in savings (self-reported) <span class="src">[S2]</span>','First quantified saving about 2.5 months after full data at one customer <span class="src">[S1]</span>'],
+  feat:'Always-on monitoring, savings scan on existing ERP and supplier data, alerts on rule changes.'},
+ {h:'Savings you can defend in an audit',m:'Every saving comes with the legal text it rests on, and trade lawyers review it. Your customs team can show customs exactly why a claim qualifies.',
+  proof:['Each finding links to the clause behind it, reviewed by trade lawyers <span class="src">[S2]</span>','Trade-law research team, with former Swiss trade negotiators among the advisors <span class="src">[S5]</span>','Used by Danone, Unilever, AB InBev, BASF and Heineken <span class="src">[S1]</span>','<span class="gap">[Audit outcome from a customer needed]</span>'],
+  feat:'Trace to legal text, human review step, audit trail in the customer\'s own account.'},
+ {h:'Your trade team works on strategy, not updates',m:'Nobody reads tariff updates by hand any more. The team spends its time on sourcing and network decisions instead of keeping spreadsheets current.',
+  proof:['besso counts 7,000+ rule changes a week that it tracks for customers <span class="src">[S1]</span>','About 25% of trade-team capacity freed (self-reported) <span class="src">[S4]</span>','Starts from a data extract, no system connection needed first <span class="tag h">Claimed</span>','<span class="gap">[Hours saved per month at a named customer]</span>'],
+  feat:'Rules applied to master data without hardcoding, extract-first onboarding, simulation of sourcing scenarios.'}
+];
+const plain=h=>h.replace(/<[^>]+>/g,'');
+document.getElementById('pillars').innerHTML=PIL.map((p,i)=>'<article class="pil" id="pil'+i+'"><span class="no">Pillar '+(i+1)+'</span><h3>'+p.h+'</h3><p>'+p.m+'</p><h4>Proof</h4><ul>'+p.proof.map(x=>'<li>'+x+'</li>').join('')+'</ul><h4>Features behind it</h4><p class="feat">'+p.feat+'</p><button class="cp" type="button" data-pil="'+i+'">Copy</button></article>').join('');
+
+const PER=[
+ {r:'Global Head of Customs & Trade Compliance',d:'Champion',lead:'Pillar 2 leads',care:'Defensible origin positions, claiming every preference, getting the team out of spreadsheets.',open:'When EU–India comes into force, who on your team will requalify the bills of materials, and how much of it will be done in Excel?',obj:'"An AI can\'t sign an origin statement."',rep:'It doesn\'t. Each finding shows the rule and the data used; your team decides and signs.'},
+ {r:'VP / Chief Supply Chain Officer',d:'Decision maker',lead:'Pillar 1 leads',care:'Hitting the cost-out target without squeezing suppliers again; fewer surprises when tariffs change.',open:'Your teams have worked suppliers and freight hard. Duty is often the line nobody has fully worked. We can show what your top corridors leave on the table, from one data sample.',obj:'"Vendor savings numbers are always inflated."',rep:'Then judge the figure on your own data, checked by your customs team before any contract.'},
+ {r:'CFO / Head of Group Tax',d:'Financial approver',lead:'Pillars 1 and 2 lead',care:'Savings that show up as booked money, and no added penalty risk from wrong preference claims.',open:'Duty is one of the few costs you can cut without a supplier negotiation. Want to see how much of it you are entitled not to pay?',obj:'"Is this booked money or a potential?"',rep:'besso separates savings potential from savings recovered. Agree the measure before you start.'},
+ {r:'SAP GTS owner and InfoSec',d:'Technical evaluator, can block',lead:'Pillar 3 leads',care:'No new integration project, clean master data, passing security review without exceptions.',open:'We can start from one extract you already produce for your broker. No connector until your customs team has seen the result.',obj:'"We don\'t send SAP data to a startup."',rep:'Start with a light, scoped sample. Hosting and certifications: [confirm with besso].'}
+];
+document.getElementById('personas-list').innerHTML=PER.map((p,i)=>'<article class="card" id="per'+i+'"><div class="top"><div><span class="lead">'+p.d+' · '+p.lead+'</span><h3>'+p.r+'</h3></div><button class="cp" type="button" data-per="'+i+'">Copy</button></div><dl><dt>What they care about</dt><dd>'+p.care+'</dd><dt>Open with</dt><dd>"'+p.open+'"</dd><dt>Likely objection</dt><dd>'+p.obj+' '+p.rep+'</dd></dl></article>').join('');
+
+const PITCH=[
+ {t:'10 seconds',p:['besso finds the import duty global food and drink groups overpay, keeps finding it as the rules change, and backs every saving with its legal basis.']},
+ {t:'30 seconds',p:['Global food and drink groups pay duty across dozens of trade lanes, and the rules behind it change thousands of times a week. Most rely on brokers and a consultant review that is out of date within months. besso watches more than 1,250 rules and tariff schedules all the time, and its trade-law team checks every saving it finds. Danone, Unilever and AB InBev already use it. Can we run a screen on one of your regions?']},
+ {t:'2 minutes',p:['Problem: duty looks like a fixed cost, so nobody owns the overpayment. New agreements, tariff changes and rules of origin move faster than any customs team can read.','What we do: besso screens your existing ERP and supplier data against about 700 trade agreements and flags every preference you could claim, then keeps watching as the rules change.','Why us: it is always on, not a snapshot, and every finding traces to the legal text and is reviewed by trade lawyers, so you can defend it in an audit.','Proof: Danone, Unilever, AB InBev, BASF and Heineken use it; one Swiss raw materials client reports about US$40M a year.','Ask: give us one region or subsidiary and a data extract, and we will show you the number on your own data.']}
+];
+document.getElementById('pitch-list').innerHTML=PITCH.map((p,i)=>'<div class="pitch" id="pt'+i+'"><div class="top"><h3>'+p.t+'</h3><button class="cp" type="button" data-pt="'+i+'">Copy</button></div>'+p.p.map(x=>'<p>'+x+'</p>').join('')+'</div>').join('');
+
+const BOIL=[
+ {t:'About besso (50 words)',p:'besso is a Bern-based trade regulation intelligence platform. It screens multinationals\' supply chain data against about 700 trade agreements to find duty they overpay, then keeps watching as rules change. Every finding traces to the legal text and is reviewed by trade lawyers. Customers include Danone, Unilever, AB InBev and BASF.'},
+ {t:'About besso (100 words)',p:'besso, founded in 2023 in Bern, Switzerland, helps global manufacturers stop overpaying import duty. Its AI platform screens existing ERP and supplier data against about 700 trade agreements and more than 1,250 regulations and tariff schedules, flagging preferential tariffs a company could claim and origin risks it should fix. Unlike one-off consultant reviews, besso keeps monitoring every lane as rules change, and its trade-law research team checks each finding, so customers can defend their claims in an audit. Customers include Danone, Unilever, AB InBev, BASF, Coca-Cola and Heineken. besso raised €4.29M in October 2026 to expand its platform.'}
+];
+document.getElementById('boiler-list').innerHTML=BOIL.map((b,i)=>'<div class="pitch" id="bp'+i+'"><div class="top"><h3>'+b.t+'</h3><button class="cp" type="button" data-bp="'+i+'">Copy</button></div><p>'+b.p+'</p></div>').join('');
+
+const USE=[['Duty you overpay','the problem in the buyer\'s money'],['Trade lane / corridor','how customs teams think'],['Legal basis','the reason customs can defend a claim'],['Preferential origin','the customs team\'s own term'],['Savings recovered','booked money, not potential']];
+const AVOID=[['AI-powered (on its own)','every competitor says it; lead with the result'],['Unlock hidden savings','vague; name the lane and the number'],['Seamless integration','unproven; say "starts from a data extract"'],['Guaranteed savings','never promised; savings depend on the data'],['Replace your customs team','wrong; besso supports the team that signs']];
+const li=a=>a.map(x=>'<li><b>'+x[0]+'</b><span>'+x[1]+'</span></li>').join('');
+document.getElementById('use').innerHTML=li(USE);document.getElementById('avoid').innerHTML=li(AVOID);
+
+const texts={
+ roof:()=>plain(document.getElementById('roofText').innerHTML),
+ pil:i=>{const p=PIL[i];return p.h+'\n'+p.m+'\nProof:\n'+p.proof.map(x=>'- '+plain(x)).join('\n')+'\nFeatures: '+p.feat;},
+ per:i=>{const p=PER[i];return p.r+' ('+p.d+', '+p.lead+')\nCares about: '+p.care+'\nOpen with: "'+p.open+'"\nObjection: '+p.obj+' '+p.rep;},
+ pt:i=>PITCH[i].p.join('\n\n'),bp:i=>BOIL[i].p
+};
+document.addEventListener('click',e=>{const b=e.target.closest('.cp');if(!b)return;let t='';
+ if(b.dataset.copy)t=texts.roof();else if(b.dataset.pil)t=texts.pil(+b.dataset.pil);else if(b.dataset.per)t=texts.per(+b.dataset.per);else if(b.dataset.pt)t=texts.pt(+b.dataset.pt);else if(b.dataset.bp)t=texts.bp(+b.dataset.bp);
+ const old=b.textContent;const done=m=>{b.textContent=m;setTimeout(()=>b.textContent=old,1600);};
+ try{navigator.clipboard.writeText(t).then(()=>done('Copied'),()=>done('Copy blocked'));}catch(err){done('Copy blocked');}});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website build · Ilia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pm.css">
+<style>
+/* VOICE: one proof point, stated plainly.
+   IDEA: a stack of product pages, the way a website build looks from the CMS.
+   PICTURE: a big "80" with a fanned stack of page cards beside it.
+   COLOUR and TYPE: Byzantine purple, white page cards; Montserrat.
+   LAYOUT: header band with the claim and link, picture on the right; one line of context below. */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.big{font-size:clamp(84px,14vw,170px);line-height:.9;font-weight:700;margin:0;color:#fff}
+.claim{font-size:clamp(24px,3vw,34px);line-height:1.15;font-weight:700;margin:10px 0 18px;text-wrap:balance;max-width:20ch}
+.go{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:24px;background:#fff;color:#702963;font-weight:600;text-decoration:none}
+.go:focus-visible{outline:3px solid #f2a7dc;outline-offset:3px}
+.stack{position:relative;aspect-ratio:1.1;max-width:460px;width:100%;justify-self:center}
+.stack svg{position:absolute;inset:0;width:100%;height:100%}
+.ctx{max-width:70ch}
+@media(max-width:760px){.hero{grid-template-columns:minmax(0,1fr)}.stack{max-width:320px}}
+</style>
+</head>
+<body>
+<script src="site.js" data-page="web"></script>
+<header class="band"><div class="wrap hero">
+<div>
+<p class="kick">Website Build</p>
+<p class="big">80</p>
+<p class="claim">I delivered 80 product pages for Lonza Capsugel</p>
+<a class="go" href="https://www.capsugel.com">Visit capsugel.com</a>
+</div>
+<div class="stack" role="img" aria-label="A fanned stack of product page cards">
+<svg viewBox="0 0 460 420" aria-hidden="true">
+<ellipse cx="235" cy="402" rx="170" ry="12" fill="#3f1537" opacity=".45"/>
+<g transform="rotate(-12 230 220)"><rect x="110" y="70" width="240" height="300" rx="14" fill="#d9b3cf"/></g>
+<g transform="rotate(-5 230 220)"><rect x="110" y="70" width="240" height="300" rx="14" fill="#ecd6e6"/></g>
+<g transform="rotate(4 230 220)">
+<rect x="110" y="70" width="240" height="300" rx="14" fill="#fff"/>
+<rect x="110" y="70" width="240" height="44" rx="14" fill="#f6f1f5"/>
+<circle cx="134" cy="92" r="6" fill="#702963"/><rect x="150" y="87" width="90" height="10" rx="5" fill="#cbb6c6"/>
+<rect x="132" y="134" width="96" height="96" rx="10" fill="#f1e3ed"/>
+<ellipse cx="180" cy="182" rx="16" ry="34" fill="#702963" transform="rotate(30 180 182)"/>
+<rect x="244" y="138" width="86" height="12" rx="6" fill="#1F1A1E"/><rect x="244" y="160" width="76" height="8" rx="4" fill="#cbb6c6"/><rect x="244" y="176" width="82" height="8" rx="4" fill="#cbb6c6"/><rect x="244" y="192" width="60" height="8" rx="4" fill="#cbb6c6"/>
+<rect x="244" y="212" width="70" height="20" rx="10" fill="#702963"/>
+<rect x="132" y="250" width="198" height="8" rx="4" fill="#e4d9e1"/><rect x="132" y="266" width="180" height="8" rx="4" fill="#e4d9e1"/><rect x="132" y="282" width="190" height="8" rx="4" fill="#e4d9e1"/>
+<rect x="132" y="306" width="60" height="44" rx="8" fill="#f6f1f5"/><rect x="200" y="306" width="60" height="44" rx="8" fill="#f6f1f5"/><rect x="268" y="306" width="62" height="44" rx="8" fill="#f6f1f5"/>
+</g>
+</svg>
+</div>
+</div></header>
+<main class="band"><div class="wrap">
+<p class="ctx">As Global Digital Marketing Specialist at Lonza Capsules &amp; Health Ingredients (2024–2025), I built the product website and knowledge center for Capsugel capsules, aligning more than 30 senior stakeholders through five review rounds, and kept the content and SEO up to date in Sitecore.</p>
+</div></main>
+</body>
+</html>

@@ -5,12 +5,20 @@
     const page = (me && me.dataset.page) || '';
     const items = [
       { id: 'home', label: 'Home', href: 'index.html' },
+      { id: 'pmm', label: 'Product Marketing', children: [
+        { id: 'positioning', label: 'Positioning Map', href: 'positioning.html', note: 'Five decisions and two competitor maps' },
+        { id: 'messaging', label: 'Messaging House', href: 'messaging-house.html', note: 'Core message, three pillars, pitches' },
+        { id: 'icp', label: 'ICP & Buyer Personas', href: 'icp.html', note: 'Who buys, who decides, how to reach them' },
+        { id: 'vp', label: 'Value Propositions', href: 'value-propositions.html', note: 'One canvas per ICP' }
+      ]},
       { id: 'sales', label: 'Sales Enablement', children: [
         { id: 'battlecards', label: 'Battlecards', href: 'battlecards.html', note: 'Four alternatives and doing nothing' },
         { id: 'objections', label: 'Objection Handling', href: 'objection-handling.html', note: '13 objections, 9 tough questions' }
       ]},
+      { id: 'b2b', label: 'B2B Outreach', href: 'b2b-outreach.html' },
       { id: 'mi', label: 'Market Intelligence', href: 'market-intelligence.html' },
-      { id: 'tim', label: 'TIM MVP', href: 'tim-mvp.html' }
+      { id: 'tim', label: 'TIM MVP', href: 'tim-mvp.html' },
+      { id: 'web', label: 'Website Build', href: 'website-build.html' }
     ];
 
     if (!document.querySelector('link[href*="Montserrat"]')) {
@@ -22,14 +30,14 @@
 
     const css = document.createElement('style');
     css.textContent = `
-.sn{background:#702963;color:#fff;font:500 15px/1.3 Montserrat,system-ui,sans-serif;position:relative;z-index:30;border-bottom:1px solid rgba(255,255,255,.18)}
+.sn{background:#702963;color:#fff;font:500 14.5px/1.3 Montserrat,system-ui,sans-serif;position:relative;z-index:30;border-bottom:1px solid rgba(255,255,255,.18)}
 .sn *{box-sizing:border-box}
-.sn-in{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px);display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px;min-height:60px}
+.sn-in{max-width:1360px;margin:0 auto;padding:0 max(3vw,16px);display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-height:60px}
 .sn-brand{color:#fff;text-decoration:none;font-weight:700;font-size:15px;margin-inline-end:auto;padding:10px 0;white-space:nowrap}
 .sn-brand span{font-weight:400;color:#f0dceb}
 .sn-list{display:flex;flex-wrap:wrap;gap:2px;margin:0;padding:0;list-style:none}
 .sn-list>li{position:relative}
-.sn a.sn-l,.sn button.sn-l{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;color:#fff;text-decoration:none;background:none;border:0;border-radius:6px;font:inherit;cursor:pointer;white-space:nowrap}
+.sn a.sn-l,.sn button.sn-l{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;color:#fff;text-decoration:none;background:none;border:0;border-radius:6px;font:inherit;cursor:pointer;white-space:nowrap}
 .sn .sn-l:hover{background:rgba(255,255,255,.12)}
 .sn .sn-l:focus-visible,.sn-menu a:focus-visible{outline:3px solid #fff;outline-offset:1px}
 .sn .sn-l[aria-current=page]{box-shadow:inset 0 -3px 0 #fff;border-radius:6px 6px 0 0}

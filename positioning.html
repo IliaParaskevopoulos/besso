@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positioning map · besso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pm.css">
+<style>
+/* VOICE: a strategist's working sheet — decisive, with the assumptions left visible.
+   IDEA: the competitive map a product marketer pins above the desk, with the open space marked.
+   PICTURE: a large two-axis map; besso alone in the corner that is always on and legally checked; a toggle to the second map.
+   COLOUR and TYPE: Byzantine purple for besso and the open space, grey for alternatives; Montserrat.
+   LAYOUT: header band, map with the why-we-win panel beside it, statement and chain, the five decisions as boards, value ladder, open questions. */
+.mapwrap{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.toggle{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.toggle button{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 14px Montserrat,sans-serif;cursor:pointer}
+.toggle button[aria-pressed=true]{background:var(--purbg);border-color:var(--purbg);color:#fff}
+.fig{position:relative;min-height:340px;aspect-ratio:1.18}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.side h3{margin:0 0 6px;font-size:13px;font-weight:600;color:var(--pur)}
+.phrase{font-size:clamp(22px,2.4vw,28px);line-height:1.2;font-weight:700;margin:0 0 22px;text-wrap:balance}
+.side ul{margin:0 0 20px;padding-inline-start:18px}
+.side li{margin:0 0 8px;font-size:15px}
+.mapnote{font-size:13.5px;color:var(--mut);margin:10px 0 0}
+.stmt{background:var(--purbg);color:#fff;border-radius:16px;padding:clamp(20px,3vw,32px)}
+.stmt h3{margin:0 0 8px;font-size:13px;color:#f0dceb;font-weight:600}
+.stmt p{margin:0;font-size:clamp(17px,1.8vw,20px);line-height:1.5;max-width:80ch}
+.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:16px;list-style:none;padding:0}
+.chain li{background:var(--tint);border-radius:10px;padding:14px;border-top:3px solid var(--pur)}
+.chain small{display:block;font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:4px}
+.chain b{font-size:15px;line-height:1.35;display:block}
+.risks{margin:0;padding-inline-start:20px}
+.risks li{margin:0 0 8px}
+@media(max-width:900px){.mapwrap{grid-template-columns:minmax(0,1fr)}.chain{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.chain{grid-template-columns:minmax(0,1fr)}.fig{aspect-ratio:.95}}
+</style>
+</head>
+<body>
+<script src="site.js" data-page="positioning"></script>
+<header class="band"><div class="wrap">
+<p class="kick">Product Marketing · Positioning</p>
+<h1>besso owns the corner nobody else holds: always on, and legally checked</h1>
+<p class="lead">Five positioning decisions for besso (alternatives, unique attributes, value, best-fit buyers and category) and the maps that show where besso wins against the in-house team, consultants and the trade software suites.</p>
+<div class="meta"><span>Built <b>18 Nov 2026</b></span><span>Sources <b>besso's site, funding coverage, competitor pages</b></span><span>Competitor placements <b>assumed, to test in deals</b></span></div>
+</div></header>
+
+<main class="band" style="padding-top:0"><div class="wrap">
+<nav class="jump scroll" aria-label="On this page"><a href="#map">Map</a><a href="#statement">Statement</a><a href="#decisions">Five decisions</a><a href="#ladder">Value ladder</a><a href="#risks">Open questions</a></nav>
+
+<section class="s" id="map">
+<div class="mapwrap">
+<div>
+<div class="toggle" role="group" aria-label="Choose a map">
+<button type="button" data-m="0" aria-pressed="true">Primary map</button>
+<button type="button" data-m="1" aria-pressed="false">Second map</button>
+</div>
+<div class="fig" id="fig"><svg id="svg" role="img" aria-labelledby="mapTitle"><title id="mapTitle">Positioning map of besso against seven alternatives</title></svg></div>
+<p class="mapnote" id="mapnote"></p>
+</div>
+<div class="side">
+<h3>Positioning phrase</h3>
+<p class="phrase">Always-on duty savings, checked by legal experts, for global food groups.</p>
+<h3>Why we win</h3>
+<ul>
+<li><b>Always on:</b> 1,250+ trade rules and tariff schedules monitored, against a consultant's one-off review. <span class="tag">Proven</span></li>
+<li><b>Legally checked:</b> a legal research team behind each finding, against software-only suites. <span class="tag">Proven</span></li>
+<li><b>Peer proof:</b> Danone, Unilever, AB InBev and Heineken already use it. <span class="tag">Proven</span></li>
+</ul>
+<h3>Where we don't compete</h3>
+<ul>
+<li>The full compliance workflow (screening, filing, export controls): leave it to the suites and sit on top of them.</li>
+<li>Small importers trading in one or two corridors.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="s" id="statement">
+<h2 class="sec">The positioning statement</h2>
+<p class="sub">How the five decisions connect, from what the buyer compares besso with to the category that makes the value obvious.</p>
+<div class="stmt">
+<h3>Positioning in one line</h3>
+<p>besso is the trade regulation intelligence platform for global food and drink groups that keeps finding the duty they overpay across every trade lane, unlike one-off consultant reviews and broker advice.</p>
+</div>
+<ol class="chain">
+<li><small>Main alternative</small><b>In-house trade team plus brokers</b></li>
+<li><small>Top unique attribute</small><b>Always-on monitoring plus legal research</b></li>
+<li><small>Top value</small><b>Duty you stop overpaying</b></li>
+<li><small>Best-fit buyer</small><b>Global food and drink groups</b></li>
+<li><small>Category</small><b>Trade regulation intelligence for duty savings</b></li>
+</ol>
+<p class="note" style="margin-top:16px">Full statement: global food and drink groups pay duty on billions of euros of goods every year, and the rules that decide how much keep changing. Most rely on their trade team and brokers, with an occasional consultant review that is out of date within months. besso watches more than 1,250 trade rules and tariff schedules all the time, and its legal research team checks every saving it finds. That is why Danone, Unilever and AB InBev use it to cut duty they can defend in an audit.</p>
+</section>
+
+<section class="s" id="decisions">
+<h2 class="sec">The five decisions</h2>
+<p class="sub">Each board records the decision, the options weighed, and why. Tags show what is proven, claimed or assumed.</p>
+<div class="grid2">
+<div><figure class="bd" data-w="760" data-h="1000"><iframe src="boards/pos-1-alternatives.html" title="Decision 1: alternatives" loading="lazy"></iframe></figure><p class="bdcap">1 · What the buyer really compares besso against</p></div>
+<div><figure class="bd" data-w="760" data-h="1000"><iframe src="boards/pos-2-attributes.html" title="Decision 2: unique attributes" loading="lazy"></iframe></figure><p class="bdcap">2 · What besso has that the alternatives don't</p></div>
+<div><figure class="bd" data-w="760" data-h="1000"><iframe src="boards/pos-3-value.html" title="Decision 3: value" loading="lazy"></iframe></figure><p class="bdcap">3 · The value those attributes produce</p></div>
+<div><figure class="bd" data-w="760" data-h="1000"><iframe src="boards/pos-4-buyers.html" title="Decision 4: best-fit buyers" loading="lazy"></iframe></figure><p class="bdcap">4 · Who cares most about that value</p></div>
+<div><figure class="bd" data-w="760" data-h="1000"><iframe src="boards/pos-5-category.html" title="Decision 5: category" loading="lazy"></iframe></figure><p class="bdcap">5 · The category that makes the value obvious</p></div>
+</div>
+</section>
+
+<section class="s" id="ladder">
+<h2 class="sec">Value ladder</h2>
+<p class="sub">From each unique attribute to a business outcome the buyer can measure. The first rung is what the CFO buys; the other two get customs and legal to say yes.</p>
+<figure class="bd" data-w="1600" data-h="520"><iframe src="boards/pos-ladder.html" title="Value ladder" loading="lazy"></iframe></figure>
+</section>
+
+<section class="s" id="risks">
+<h2 class="sec">Open questions to settle with besso</h2>
+<ul class="risks">
+<li>Savings proof: besso's only public figure is self-reported (about US$40M a year for one Swiss raw materials client, in the WTO case study). A named customer case is the first marketing priority.</li>
+<li>Descartes and Thomson Reuters already sell AI trade-agreement savings, so besso has to win on always-on monitoring and legal depth, not on "AI".</li>
+<li>Integration effort and data needs are not public: <span class="gap">[confirm with besso]</span>.</li>
+<li>The ranking of alternatives and the €5bn+ size threshold are assumptions; validate them with sales calls and lost deals.</li>
+</ul>
+</section>
+</div></main>
+
+<footer class="band"><div class="wrap">
+<p class="note" style="margin:0">Placements on the maps are scored 0–10 from public positioning, not from deal data. Prepared by Ilia Paraskevopoulos with Claude; not official besso material.</p>
+</div></footer>
+
+<script src="boards.js"></script>
+<script>
+{
+const P=[
+ {n:'besso',me:1},{n:'In-house + brokers'},{n:'Consultancy review'},{n:'ONESOURCE'},{n:'Descartes'},{n:'e2open'},{n:'SAP GTS'},{n:'Spreadsheets'}
+];
+/* scores 0-10: [x, y, label side] */
+const MAPS=[
+ {x:['Software only','Software + legal experts','Who checks the saving'],y:['Snapshot','Always on','How often rules are checked'],
+  open:'Open space: always on and legally checked',
+  pts:{'besso':[7.8,8.9,'l'],'In-house + brokers':[4.4,2.2,'r'],'Consultancy review':[8.9,1.1,'l'],'ONESOURCE':[3.3,6.7,'r'],'Descartes':[2.2,6.7,'l'],'e2open':[2.2,5.6,'r'],'SAP GTS':[1.1,5.6,'b'],'Spreadsheets':[3.3,0,'r']},
+  note:'Primary map: the two strongest independent factors. Only besso sits where rules are checked all the time and a legal team checks each saving.'},
+ {x:['Big IT project','Light add-on','Effort to start'],y:['Run compliance','Find savings','What the tool is for'],
+  open:'',
+  pts:{'besso':[5.6,8.9,'r'],'In-house + brokers':[8.9,2.2,'l'],'Consultancy review':[6.7,6.7,'b'],'ONESOURCE':[2.2,5.6,'r'],'Descartes':[3.3,6.7,'r'],'e2open':[2.2,5.6,'b'],'SAP GTS':[3.3,2.2,'b'],'Spreadsheets':[10,3.3,'l']},
+  note:'Second map: besso leads on savings focus but is not the lightest start; in-house teams and spreadsheets win on effort. Effort to start is claimed, not proven.'}
+];
+let cur=0;
+const s=document.getElementById('svg'),fig=document.getElementById('fig'),note=document.getElementById('mapnote');
+const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const draw=()=>{
+ const W=fig.clientWidth,H=fig.clientHeight,m=MAPS[cur],small=W<520;
+ const L=small?30:44,R=small?12:20,T=16,B=small?44:56;
+ const X=v=>L+(W-L-R)*v/10,Y=v=>T+(H-T-B)*(1-v/10);
+ const css=getComputedStyle(document.documentElement);
+ let g='';
+ if(m.open){g+='<rect x="'+X(6.4)+'" y="'+Y(10)+'" width="'+(X(10)-X(6.4))+'" height="'+(Y(6.4)-Y(10))+'" rx="10" fill="var(--hl)" stroke="var(--pur)" stroke-dasharray="5 5"/>';
+  const ox=X(6.4)+10,oy=Y(6.4)-(small?10:28);
+  g+=small?'<text x="'+ox+'" y="'+oy+'" font-size="11" font-weight="600" fill="var(--pur)">Open space</text>':'<text x="'+ox+'" y="'+oy+'" font-size="12.5" font-weight="600" fill="var(--pur)"><tspan x="'+ox+'">Open space:</tspan><tspan x="'+ox+'" dy="16">always on and legally checked</tspan></text>';}
+ g+='<line x1="'+X(5)+'" y1="'+Y(0)+'" x2="'+X(5)+'" y2="'+Y(10)+'" stroke="var(--line)"/><line x1="'+X(0)+'" y1="'+Y(5)+'" x2="'+X(10)+'" y2="'+Y(5)+'" stroke="var(--line)"/>';
+ g+='<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(10)+'" y2="'+Y(0)+'" stroke="var(--mut)" stroke-width="1.5"/><line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(0)+'" y2="'+Y(10)+'" stroke="var(--mut)" stroke-width="1.5"/>';
+ const fs=small?11:13;
+ g+='<text x="'+X(0)+'" y="'+(Y(0)+18)+'" font-size="'+fs+'" fill="var(--mut)">'+esc(m.x[0])+'</text><text x="'+X(10)+'" y="'+(Y(0)+18)+'" text-anchor="end" font-size="'+fs+'" fill="var(--mut)">'+esc(m.x[1])+'</text>';
+ g+='<text x="'+X(5)+'" y="'+(Y(0)+(small?36:44))+'" text-anchor="middle" font-size="'+fs+'" font-weight="700" fill="var(--ink)">'+esc(m.x[2])+'</text>';
+ g+='<text transform="translate('+(L-(small?10:16))+' '+Y(0)+') rotate(-90)" font-size="'+fs+'" fill="var(--mut)">'+esc(m.y[0])+'</text><text transform="translate('+(L-(small?10:16))+' '+Y(10)+') rotate(-90)" text-anchor="end" font-size="'+fs+'" fill="var(--mut)">'+esc(m.y[1])+'</text>';
+ if(!small)g+='<text transform="translate('+(L-30)+' '+Y(5)+') rotate(-90)" text-anchor="middle" font-size="'+fs+'" font-weight="700" fill="var(--ink)">'+esc(m.y[2])+'</text>';
+ P.forEach(p=>{const [x,y,side]=m.pts[p.n];const cx=X(x),cy=Y(y),r=p.me?(small?8:11):(small?5:6.5);
+  g+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+(p.me?'var(--pur)':'var(--mut)')+'" opacity="'+(p.me?1:.8)+'"/>';
+  const off=r+6;let tx=cx+off,ty=cy+4,anc='start';
+  if(side==='l'){tx=cx-off;anc='end';}if(side==='b'){tx=cx;ty=cy+r+15;anc='middle';}
+  g+='<text x="'+tx+'" y="'+ty+'" text-anchor="'+anc+'" font-size="'+(p.me?fs+3:fs)+'" font-weight="'+(p.me?700:500)+'" fill="'+(p.me?'var(--pur)':'var(--ink)')+'">'+esc(p.n)+'</text>';});
+ s.innerHTML='<title>Positioning map: '+esc(m.y[2])+' against '+esc(m.x[2])+'</title>'+g;
+ note.textContent=m.note;
+};
+const mapRO=new ResizeObserver(draw);mapRO.observe(fig);
+document.querySelectorAll('.toggle button').forEach(b=>b.addEventListener('click',()=>{cur=+b.dataset.m;document.querySelectorAll('.toggle button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw();}));
+draw();
+}
+</script>
+</body>
+</html>
