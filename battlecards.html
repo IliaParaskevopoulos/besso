@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Battlecards · besso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a seller's field kit — calm, direct, honest about where besso loses.
+   IDEA: a deck of printed battlecards; front = 30-second view, back = prep depth.
+   PICTURE: the overview strip of five cards with threat meters is the first thing seen.
+   COLOUR and TYPE: Byzantine purple #702963, near-black #1F1A1E, tint #F6F1F5; Montserrat.
+   LAYOUT: header band, overview strip, tabs, one card at a time; win/lose side by side. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1F1A1E);--ink:light-dark(#1F1A1E,#F3ECF1);--mut:light-dark(#5f5560,#b9adb6);
+--tint:light-dark(#F6F1F5,#2a2128);--line:light-dark(#e4d9e1,#3d313a);--pur:light-dark(#702963,#d59ac7);
+--purbg:#702963;--hl:light-dark(#f1e3ed,#3a2535)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Montserrat,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,52px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header.band{background:var(--purbg);color:#fff}
+header h1{font-size:clamp(30px,4.4vw,48px);line-height:1.05;margin:0 0 12px;font-weight:700;text-wrap:balance}
+header p{margin:0;max-width:70ch;color:#f0dceb}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font-size:14px;color:#f0dceb}
+.meta b{color:#fff;font-weight:600}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:-28px}
+.tile{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;text-align:left;font:inherit;color:inherit;box-shadow:0 6px 18px rgba(31,26,30,.08);display:flex;flex-direction:column;gap:8px;min-height:44px}
+.tile:hover,.tile[aria-current=true]{border-color:var(--pur);outline:2px solid var(--pur);outline-offset:-2px}
+.tile:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--pur);outline-offset:2px}
+.tile h3{margin:0;font-size:15px;font-weight:700}
+.tile p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.45}
+.thr{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--pur)}
+.thr i{width:18px;height:6px;border-radius:3px;background:var(--line)}.thr i.on{background:var(--pur)}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin:32px 0 0}
+nav.tabs a{flex:none;padding:12px 16px;text-decoration:none;color:var(--mut);font-weight:600;font-size:15px;border-bottom:3px solid transparent;min-height:44px}
+nav.tabs a[aria-current=true]{color:var(--pur);border-color:var(--pur)}
+.card{padding-top:24px}
+.chead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;align-items:baseline}
+.chead h2{font-size:clamp(26px,3.4vw,36px);line-height:1.05;margin:0;font-weight:700}
+.small{font-size:13px;color:var(--mut)}
+.oneline{font-size:clamp(18px,2vw,21px);font-weight:600;line-height:1.4;margin:14px 0 22px;padding:18px 20px;background:var(--tint);border-radius:10px;border-inline-start:6px solid var(--pur)}
+h4{font-size:13px;font-weight:700;color:var(--pur);margin:0 0 8px;letter-spacing:.02em}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.box{border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.box.hl{background:var(--hl);border-color:transparent}
+ul.list{margin:0;padding-inline-start:18px}ul.list li{margin:0 0 8px}
+.pt{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--line)}.pt:last-child{border:0;margin:0;padding:0}
+.pt b{display:block;margin-bottom:4px}
+.pt dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;margin:0;font-size:14.5px}
+.pt dt{font-weight:600;color:var(--mut)}.pt dd{margin:0}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:20px;margin:0 3px 0 0;vertical-align:1px;white-space:nowrap;border:1px solid var(--pur);color:var(--pur)}
+.tag.f{border-style:dashed}.tag.io{background:var(--ink);color:var(--bg);border-color:var(--ink)}.tag.cs{background:var(--pur);color:#fff;border-color:var(--pur)}
+.src{font-size:12px;color:var(--mut);white-space:nowrap}
+.src a{color:var(--mut)}
+.gap{background:light-dark(#fff3c4,#4a3f12);padding:0 4px;border-radius:3px}
+.copyrow{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px}
+.copyrow p{margin:0;flex:1}
+.cp{flex:none;font:600 13px Montserrat,sans-serif;border:1px solid var(--pur);color:var(--pur);background:transparent;border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+.cp.done{background:var(--pur);color:#fff}
+details.back{margin-top:24px;border-top:2px solid var(--pur)}
+details.back>summary{cursor:pointer;font-weight:700;font-size:17px;padding:16px 0;color:var(--pur);min-height:44px}
+.sec{margin:0 0 22px}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mut);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--mut);margin-top:14px}
+footer{border-top:1px solid var(--line)}
+footer ul{margin:0;padding-inline-start:18px}
+.scroll{overflow-x:auto}
+@media(max-width:900px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.strip{grid-template-columns:minmax(0,1fr)}.g2{grid-template-columns:minmax(0,1fr)}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;font-weight:600;color:var(--mut)}}
+@media print{header.band{background:none;color:#000}header p,.meta,.meta b{color:#000}.strip,nav.tabs,.cp,footer,.legend{display:none}details.back{break-before:page}.front{break-inside:avoid}body{font-size:11.5pt}.oneline{background:#f6f1f5}@page{size:A4;margin:12mm}}
+@media(prefers-reduced-motion:no-preference){.card{animation:in .25s ease}@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1}}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<script src="site.js" data-page="battlecards"></script>
+<header class="band"><div class="wrap">
+<h1>How besso wins against the four alternatives buyers weigh, and against doing nothing</h1>
+<p>Battlecards for sellers at besso AG (Bern), the AI platform that finds unclaimed preferential tariffs and rules-of-origin risk in a multinational's supply chain. Front of each card is the 30-second view; open the back to prepare.</p>
+<div class="meta"><span><b>Industry-neutral</b> (besso's main sectors: food and beverage, raw materials, manufacturing)</span><span>Last verified <b>21 Nov 2026</b></span><span>Owner <b class="gap" style="color:#1F1A1E">[Card owner — name one]</b></span></div>
+</div></header>
+<main class="band" style="padding-top:0"><div class="wrap">
+<div class="strip" id="strip"></div>
+<div class="legend"><span><span class="tag">Verified</span>primary or several sources</span><span><span class="tag">Reported</span>one credible source</span><span><span class="tag f">Field intel</span>from sellers, unverified</span><span><span class="tag cs">Customer-safe</span>may show buyers</span><span><span class="tag io">Internal only</span>never show buyers</span><span><span class="gap">[Gap]</span> missing data to fill</span></div>
+<nav class="tabs scroll" id="tabs" aria-label="Battlecards"></nav>
+<div id="card"></div>
+</div></main>
+<footer class="band"><div class="wrap">
+<h4>Sources</h4>
+<ol id="srcs" style="font-size:14px;padding-inline-start:28px"></ol>
+<p class="small">No win/loss data, seller field intel or pricing from besso was available when these cards were built. Every claim from besso's own site, press release or the WTO case study is self-reported by besso and tagged Reported.</p>
+</div></footer>
+<script>
+{
+const S=[
+["Startup Researcher — Besso raises €4.29M (customer list, 1,250 regulations, missed-preference and cost figures)","https://www.startupresearcher.com/news/besso-raises-4-29-million-to-expand-ai-trade-compliance-platform","Oct 2026"],
+["WTO — AI case study: Besso (method, ~700 agreements, US$40M case, limits)","https://www.wto.org/english/tratop_e/dtt_e/aicasestudy/besso_e.htm","2026"],
+["besso.com — How it works (2.5x FTA coverage claim, simulation, no hardcoded rules)","https://www.besso.com/how-it-works","Nov 2026"],
+["besso.com — Our impact (10–15x ROI and 25% capacity claims)","https://www.besso.com/our-impact","Nov 2026"],
+["besso.com — About us (team, academic and strategic advisors)","https://www.besso.com/about-us","Nov 2026"],
+["STAT Times — Besso appoints Michiel Kalverkamp as CCO (US$240M over 36 projects, previous roles)","https://www.stattimes.com/people/besso-appoints-michiel-kalverkamp-as-chief-customer-officer-1353571","2024"],
+["World Trade Institute blog — Besso on trade expertise and explicability","https://www.wti.org/events-news/blog/1287/from-firefighting-to-foresight-why-trade-expertise-must-lead-the-digitalization-of-trade-compliance/","Apr 2026"],
+["Thomson Reuters — Tariff-resilient compliance program (155M updates, 220+ jurisdictions)","https://tax.thomsonreuters.com/blog/building-a-tariff-resilient-compliance-program-ai-technology-and-a-practical-90-day-roadmap-for-global-manufacturers/","2026"],
+["Thomson Reuters — Hidden cost of legacy trade platforms (ONESOURCE module list)","https://tax.thomsonreuters.com/blog/hidden-cost-legacy-trade-compliance-platform/","2026"],
+["Gartner Peer Insights — ONESOURCE Global Trade Management (pricing model)","https://www.gartner.com/reviews/product/onesource-global-trade-management","Oct 2025"],
+["rfp.wiki — ONESOURCE vs e2open comparison (TCO drivers, review scores)","https://www.rfp.wiki/supply-chain-logistics-transportation/transportation-logistics/global-trade-management-software/thomson-reuters-onesource-global-trade/e2open-global-trade-management","2026"],
+["Forrester TEI for Thomson Reuters ONESOURCE+ (implementation fees, partners)","https://tei.forrester.com/go/thomsonreuters/onesourceplus/","n.d."],
+["SAP — Global Trade Services: Trade Preference","https://www.sap.com/assetdetail/2024/02/a0340ae3-fa7e-0010-bca6-c68f7e60039b.html","Feb 2024"],
+["SAP Knowledge Base 3337956 — GTS and USMCA qualification methods","https://userapps.support.sap.com/sap/support/knowledge/en/3337956","n.d."],
+["SAP PRESS — Trade preference reporting in SAP GTS (BOM and master data basis)","https://blog.sap-press.com/trade-preference-reporting-in-sap-gts","n.d."],
+["Descartes — Launch of AI-powered Free Trade Intelligence (FTI)","https://www.descartes.com/resources/news/descartes-introduces-new-ai-powered-free-trade-intelligence-fti-solution-help-reduce","4 Aug 2026"],
+["Descartes / CustomsInfo — How AI is reinventing FTA qualification (hybrid model)","https://www.customsinfo.com/knowledge-center/how-ai-is-reinventing-fta-qualification-for-modern-supply-chains/","2026"],
+["Stock Titan — Descartes FTI launch analysis (no quantified customer results)","https://www.stocktitan.net/news/DSGX/descartes-introduces-new-ai-powered-free-trade-intelligence-fti-1u5io1a17hgl.html","Aug 2026"],
+["KPMG US — Data-driven tariff recovery (fixed and/or contingent fees)","https://kpmg.com/us/en/capabilities-services/tax-services/international-tax-trade-and-transfer-pricing/trade-customs/data-driven-tariff-recovery-services.html","2026"],
+["KPMG US — Resource relief in trade and customs (~75% duty savings case)","https://kpmg.com/us/en/articles/2025/need-resource-relief-trade-and-customs.html","2025"],
+["Livingston — Trade agreements services","https://www.livingstonintl.com/services/global-trade-management/trade-agreements/","2026"],
+["Thomson Reuters — How to leverage FTAs (most businesses lack FTA automation)","https://tax.thomsonreuters.com/blog/how-to-leverage-free-trade-agreements-ftas-in-your-supply-chain/","2026"],
+["Venturelab — Besso founder profile (seed round, US go-to-market)","https://www.venturelab.swiss/Besso-The-Venture-Leader-Technology-unlocking-hidden-savings-in-supply-chains","Mar 2026"],
+["Flexport — AI-powered Trade Advisory (ACE data analysis)","https://www.flexport.com/services/trade-advisory/","2026"]
+];
+const tg={V:'<span class="tag">Verified</span>',R:'<span class="tag">Reported</span>',F:'<span class="tag f">Field intel</span>',C:'<span class="tag cs">Customer-safe</span>',I:'<span class="tag io">Internal only</span>'};
+const tags=s=>(s||'').split('').map(k=>tg[k]||'').join('');
+const sr=a=>a&&a.length?' <span class="src">['+a.map(n=>'<a href="#src-'+n+'">S'+n+'</a>').join(', ')+']</span>':'';
+const G=t=>'<span class="gap">'+t+'</span>';
+const C=[
+{id:'onesource',name:'Thomson Reuters ONESOURCE Global Trade',short:'ONESOURCE',desc:'Enterprise global trade management suite, including FTA Management.',threat:3,
+line:'Win with teams that already run a trade suite but still overpay duty: besso is the savings layer that finds what the suite was never set up to look for. Don\'t fight on end-to-end trade management breadth.',
+meet:['Large-enterprise trade compliance RFPs and suite replacements',"Global importers after a tariff shock, where analyst shortlists drive the list",'Buyers who want one vendor for classification, screening, FTA, import and export'],
+pitch:'Paraphrased: one connected suite with trusted content updated fast across 220+ jurisdictions.',pitchS:[8,9],
+they:'Paraphrased, likely line: "A startup point tool. You will still need a full trade system."',theyT:'F',
+reply:'"True, we do not file declarations or screen parties. We find the duty you are overpaying and hand the result to the system you already run."',
+win:[
+{t:'Finds savings in flows nobody assessed',f:'besso screens existing ERP and supplier data against about 700 trade agreements, including annexes and footnotes.',i:'Money comes back from lanes and subsidiaries outside the configured set. One Swiss raw materials client: about US$40M a year (self-reported).',a:'Offer a screening of one region or subsidiary.',p:'WTO AI case study',s:[2],tg:'RC'},
+{t:'Every finding traces to the legal text',f:'Each output links to the clause it rests on, and trade lawyers review it.',i:'Claims the buyer can defend in a customs audit.',a:'In the demo, click from one savings line to the treaty clause.',p:'WTO case study, besso trade law team',s:[2,5,7],tg:'RC'},
+{t:'Value without a multi-module rollout',f:'besso applies rules to existing master data without hardcoding each rule. ONESOURCE projects carry implementation fees and partner work.',i:'First savings sooner, with less IT effort.',a:'Propose a scoped assessment with a fixed end date.',p:G('[Typical time to first savings — get from customer success]'),s:[3,11,12],tg:'RI'}],
+lose:[
+{t:'Buyer wants one vendor for all trade processes',h:'Qualify early: are they buying a suite or buying savings? If a suite, position besso as the add-on that pays for it.'},
+{t:'Vendor risk: small team and one investor versus Thomson Reuters',h:'Bring security documents, references from multinationals and a phased start before procurement raises it.'}],
+dismiss:'ONESOURCE is a broad suite with fast content updates. It is built to run your trade processes; besso is built to find the duty those processes still miss, and the two work side by side.',
+mines:['When did someone last check every subsidiary\'s imports for preferences it could claim, not only the ones already set up?','If customs asks why a claim qualifies, how quickly can you show the exact rule text behind it?','Who updates your FTA setup when an agreement changes, and how long does that take?'],
+obj:[
+{o:'"We already pay for ONESOURCE FTA Management."',r:'Acknowledge: using what you own makes sense. Explore: is it set up for every lane and subsidiary? Respond: besso screens the whole footprint and feeds findings into ONESOURCE. Confirm: would a one-region screen show whether there is a gap?'},
+{o:'"Thomson Reuters content is the benchmark."',r:'Acknowledge: their content is strong. Explore: is the gap content, or applying it to your own flows? Respond: besso applies rules to your transactions and shows the clause behind each result. Confirm: shall we test it on lanes you know well?'},
+{o:'"We cannot add another vendor to security review."',r:'Acknowledge: reviews take time. Explore: what does your team need first? Respond: we start on a data extract, not a system connection. Confirm: can we send our security pack this week? '+G('[Confirm besso security certifications]')},
+{o:'"Our implementation partner can run this analysis."',r:'Acknowledge: partners know your setup. Explore: would they repeat it every time a rule changes? Respond: besso keeps monitoring after the first screen. Confirm: who covers that today?'}],
+defend:[
+{t:'"How many jurisdictions and updates do you cover?"',d:'Do not play the volume game. State ours (about 700 agreements, 1,250+ regulations and tariff schedules monitored), then ask which corridors matter to them.',s:[1,2]},
+{t:'"Can besso file declarations or screen parties?"',d:'Say no plainly. Move to the question that matters: how much duty is being overpaid today.'},
+{t:'"Who checks your AI?"',d:'Human-in-the-loop review by trade lawyers, statistical checks, and a trace to legal text. Do not lead with the 99.9% accuracy figure; it is self-reported.',s:[2]}],
+sw:{s:['Broad suite: classification, screening, FTA, FTZ, import and export [S9]','Content at scale: 155M updates a year, 220+ jurisdictions [S8]','Brand trust and established partner network','Genuinely better at running end-to-end trade execution'],w:['Total cost rises with implementation, ERP and broker integrations [S11]','Implementation by Thomson Reuters or partners, with fees [S12]','Savings depend on what was configured and kept current'+' '+tags('F')]},
+price:['Model: subscription priced by modules, users, support level and implementation scope'+sr([10])+' '+tags('R'),'List price: '+G('[Their current list price — ask partners or procurement contacts]'),'Typical discounts: '+G('[Field intel needed]')+' '+tags('F'),'Frame ours: compare besso\'s fee to the savings found (besso claims a 10–15x average ROI) and to the cost of extending the suite\'s configuration'+sr([4])],
+proof:[['WTO AI case study on besso, including the US$40M raw materials case','C',[2]],['Advisory board, e.g. former Swiss Secretary of State Jean-Daniel Gerber; academic partners WTI, Geneva Graduate Institute, ETH Zurich','C',[5]],['Named customers reported in press (Danone, Unilever, AB InBev, BASF and others)','I',[1]],['Team track record: US$240M recurring duty savings over 36 projects, in previous roles','C',[6]],['Demo moment: savings line to treaty clause in one click','C',[2]]],
+talk:['You already own a strong trade system. We find the duty it was never set up to look for.','We do not replace ONESOURCE. We tell it where the money is.','Give us one region\'s data. If we find nothing, you have lost a few weeks.','Every number we show you points to the clause it comes from.'],
+dont:['Do not say Thomson Reuters content is wrong or outdated','Do not quote the 2.5x coverage claim against ONESOURCE by name; it is not a named comparison','Do not name customers unless they approved it','Do not share besso pricing or other customers\' savings']},
+
+{id:'sap-gts',name:'SAP GTS — Trade Preference Management',short:'SAP GTS',desc:'Preference determination and declarations inside the SAP landscape.',threat:2,
+line:'Win where GTS is live but preference rules and master data cover only a few agreements: besso extends coverage on top of SAP data without a new configuration project. Never argue against SAP as the system of record.',
+meet:['SAP-run multinationals, often in consumer goods, chemicals and food','Deals where the SAP centre of excellence or IT has a seat','Triggers: S/4HANA migration, GTS upgrade, new FTA in force'],
+pitch:'Paraphrased: GTS fully supports the FTA process, inside SAP.',pitchS:[13],
+they:'Likely line: "Data has to leave SAP. Keep it in GTS."',theyT:'F',
+reply:'"We work from an extract and return findings. GTS stays your system of record and runs the declarations."',
+win:[
+{t:'Covers what was never configured',f:'GTS calculates preference from BOMs and preference master data you maintain per product. besso codifies agreement rules and screens all flows.',i:'Savings appear on lanes with no rules set up in GTS.',a:'Ask which agreements are active in GTS versus the lanes they trade.',p:'WTO case: subsidiary never assessed, about US$40M a year',s:[15,2],tg:'RC'},
+{t:'See duty impact before a sourcing change',f:'besso models cost, tariff and FTA eligibility under different sourcing set-ups.',i:'Better footprint decisions, not just correct declarations afterwards.',a:'Bring a planned sourcing change into the demo.',p:'Ingredient manufacturer moved from one to three sites using besso models',s:[2,3],tg:'RC'},
+{t:'Trade lawyers behind the rules',f:'Rules come from in-house trade law specialists and academic partners, with traceable output.',i:'Less dependence on scarce GTS consultants for rule upkeep.',a:'Introduce a besso trade law specialist on the second call.',p:'besso team and advisors page',s:[5,7],tg:'RC'}],
+lose:[
+{t:'IT prefers to keep everything inside SAP',h:'Involve the SAP centre of excellence early; show the data extract format and the return path into GTS.'},
+{t:'GTS is already licensed, so it feels free',h:'Quantify missed savings first; then the question is configuration cost versus besso, not licence versus besso.'}],
+dismiss:'GTS is the right place to run preference determination and declarations inside SAP. It calculates what you have configured; besso finds the agreements and lanes you have not configured yet.',
+mines:['Which of your active trade lanes have preference rules set up in GTS today, and which do not?','When a new agreement comes into force, how long until GTS calculates it for you?','Before your next sourcing change, how will you see the duty impact across agreements?'],
+obj:[
+{o:'"GTS already does FTAs."',r:'Acknowledge: it does, well. Explore: for how many of your agreements and lanes? Respond: besso screens all of them and shows where configuration would pay. Confirm: shall we compare the list?'},
+{o:'"Our data cannot leave SAP."',r:'Acknowledge: a fair rule. Explore: what can be shared under your policy? Respond: we can start with a scoped extract. Confirm: who sets the policy? '+G('[Confirm hosting and data residency options]')},
+{o:'"Our SAP partner can add more agreements."',r:'Acknowledge: they can. Explore: which ones, and at what cost each? Respond: besso tells you which agreements are worth configuring first. Confirm: would that make the partner\'s work cheaper?'}],
+defend:[
+{t:'"Is besso SAP-certified?"',d:G('[Confirm any SAP integration or certification]')+'. If none, say so and explain the extract-and-return model.'},
+{t:'"Two sources of truth will confuse auditors."',d:'besso does not issue declarations. GTS stays the record; besso supplies the analysis and the legal trace.'}],
+sw:{s:['Native to SAP; preference determination can run as background jobs [S15]','Issues and reissues declarations when eligibility changes','Already owned by many target accounts '+tags('F'),'Genuinely better at execution inside SAP'],w:['Depends on BOM and preference master data quality [S15]','New or unusual qualification methods may need work: an SAP note says GTS did not support USMCA\'s unique methods [S14] '+tags('RI')+' (check current status)','Rule upkeep often needs specialist consultants '+tags('F')]},
+price:['Model: SAP licence, usually inside the wider SAP contract '+tags('F'),'List price: '+G('[Their current list price — SAP account contacts]'),'Frame ours: price besso against the consultant days needed to configure and maintain more agreements, and against savings found'],
+proof:[['WTO case: unassessed subsidiary, multiple ports, about US$40M a year','C',[2]],['Scenario model case: one site to three sites','C',[2]],['Named customers using SAP '+G('[Confirm which besso customers run GTS]'),'I',[]]],
+talk:['GTS runs your declarations. besso tells you which ones you are missing.','Keep SAP as your record. We bring the analysis and the clause behind it.','Before you configure the next agreement, let us show you which one pays most.'],
+dont:['Do not call GTS outdated or hard to use','Do not present the USMCA note as current without checking','Do not promise an SAP integration that is not built']},
+
+{id:'descartes',name:'Descartes Free Trade Intelligence (FTI AI)',short:'Descartes FTI',desc:'AI-enabled FTA qualification, launched August 2026.',threat:3,
+line:'Win on depth of agreement coverage, trade-law review and proven results across a multinational\'s whole footprint. Don\'t fight on logistics network breadth, and don\'t turn it into an AI versus AI argument.',
+meet:['Companies whose ERP lacks full trade management, Descartes\' stated target','Existing Descartes customers for customs filing, screening or trade data','Manufacturers with BOM-based qualification needs'],
+pitch:'Paraphrased: explainable AI qualification on 250+ rules-of-origin regimes, with deterministic engines owning the binding logic.',pitchS:[16,17],
+they:'Likely line: "A startup with an LLM. We use deterministic rules."',theyT:'F',
+reply:'"We codify rules into decision models too, then add statistical checks and trade-lawyer review. Ask us to show it."',
+win:[
+{t:'Wider agreement coverage',f:'besso covers about 700 trade agreements; Descartes states 250+ rules-of-origin regimes. The units differ, so test lane by lane.',i:'Fewer lanes left unscreened.',a:'Ask the buyer for their top 20 lanes and compare coverage.',p:'WTO case study; Descartes launch release',s:[2,16],tg:'RI'},
+{t:'Results already in the market',f:'besso is reported to serve multinationals such as Danone, BASF and Heineken. FTI launched without quantified customer results.',i:'Lower risk of being the first user.',a:'Offer a reference call with a similar company.',p:G('[Reference customers who agreed to calls]'),s:[1,18],tg:'RI'},
+{t:'Whole-footprint screening and scenarios',f:'besso screens supply chain flows and models sourcing set-ups, beyond product-by-product qualification.',i:'Finds savings at subsidiary and network level.',a:'Show the subsidiary screening case.',p:'WTO US$40M case',s:[2],tg:'RC'}],
+lose:[
+{t:'Bundle with Descartes filing, screening or data the buyer already uses',h:'Lead with a savings assessment to size the gap before the bundle conversation starts.'},
+{t:'Built-in supplier declaration and BOM workflows',h:'besso identifies; the client acts. Map early who captures the savings, and bring the buyer\'s broker or advisor in.'}],
+dismiss:'Descartes brings a strong network and a sound hybrid approach. FTI is new and centred on BOM qualification; besso already screens whole supply chains across about 700 agreements for multinationals.',
+mines:['How many of the agreements on your trade lanes does each tool cover today, and how will you check?','Which customers like you already use it, and what did they save?','Who reviews the reasoning before you file a claim: your team, or theirs?'],
+obj:[
+{o:'"Descartes is a listed company. You are a startup."',r:'Acknowledge: a fair concern. Explore: what would make it safe? Respond: start with one region, references and a clear exit. Confirm: what would procurement need to see?'},
+{o:'"Their AI is explainable too."',r:'Acknowledge: yes, they stress that. Explore: explained by whom? Respond: besso traces to the legal text and a trade lawyer reviews it. Confirm: shall we compare on one product?'},
+{o:'"We already use Descartes for filing."',r:'Acknowledge: one vendor is simpler. Explore: how much duty is unclaimed today? Respond: we size it first, and our output can feed your filing. Confirm: is that worth four weeks?'}],
+defend:[
+{t:'"Pure LLMs hallucinate on rules of origin."',d:'Agree that pure LLMs are not enough. besso codifies rules into decision models, runs statistical checks and keeps humans in the loop.',s:[2,7]},
+{t:'"Can you manage supplier declarations?"',d:G('[Confirm besso supplier-declaration features]')+'. If not, say so and show how findings hand off to their process.'}],
+sw:{s:['Large Global Logistics Network and a broad trade suite [S16]','Hybrid model: deterministic rules plus AI reasoning, what-if analysis, supplier workflows [S17]','Audit trails for qualification decisions [S16]','Genuinely better at tying FTA work into logistics execution'],w:['New product: launched 4 Aug 2026 [S16]','No quantified customer results at launch [S18]','Coverage stated as 250+ regimes [S16]']},
+price:['Model: '+G('[Their pricing model — ask Descartes customers]'),'List price: '+G('[Their current list price]'),'Bundle discounts likely when sold with other Descartes products '+tags('F'),'Frame ours: price against duty recovered per year, not against a module fee'],
+proof:[['Reference calls with similar multinationals '+G('[List approved references]'),'C',[]],['WTO case study','C',[2]],['Trade-lawyer review in the demo','C',[5]]],
+talk:['They launched in August. We have been finding savings for multinationals since 2023.','Bring your top 20 trade lanes. We will show you coverage lane by lane.','Every result we show you is checked by a trade lawyer and tied to the clause.'],
+dont:['Do not say their AI is unreliable','Do not compare 700 agreements to 250 regimes as like for like in front of buyers','Do not claim besso is deterministic-only or LLM-free unless confirmed']},
+
+{id:'advisors',name:'Trade and customs advisors (Big Four, brokers)',short:'Advisors',desc:'For example KPMG Trade & Customs, Livingston, Flexport Trade Advisory.',threat:2,
+line:'Win when the buyer wants savings that last, not a one-off report: besso keeps checking every lane as rules change. Don\'t compete on hands-on implementation or negotiating with customs authorities.',
+meet:['CFO-led duty recovery projects after tariff changes','Audits, penalties or enforcement reviews','Offers on contingent fees with no upfront cost'],
+pitch:'Paraphrased: experts find, implement and defend your savings, on fixed or contingent fees.',pitchS:[19,21],
+they:'Likely line: "Software cannot replace judgment."',theyT:'F',
+reply:'"Agreed. Our trade lawyers review every result. We make your advisors faster and keep watching after they leave."',
+win:[
+{t:'Continuous, not a snapshot',f:'besso keeps monitoring so savings persist as rules change.',i:'Savings do not erode between reviews.',a:'Ask what happened after the last review.',p:'WTO case study (ongoing monitoring)',s:[2],tg:'RC'},
+{t:'Whole footprint at software scale',f:'besso monitors 1,250+ regulations and tariff schedules and claims to free up to 25% of team capacity.',i:'Coverage a project team cannot staff.',a:'Show a multi-country screen in the demo.',p:'besso impact page (claim)',s:[1,4],tg:'RC'},
+{t:'Knowledge stays in house',f:'Each finding links to the legal text, inside the buyer\'s own platform account.',i:'Nothing is lost when the advisor team rotates.',a:'Show the trace view and export '+G('[confirm export options]'),p:'WTO case study',s:[2],tg:'RC'}],
+lose:[
+{t:'Buyer needs someone to do the work',h:'besso advises; the client acts. Partner with the buyer\'s broker or advisor rather than replace them.'},
+{t:'Contingent fee means no upfront risk',h:'Offer a scoped, low-risk start '+G('[confirm besso pilot or success-based options]')+'.'}],
+dismiss:'Good advisors bring judgment and hands-on implementation, and some work on contingency. A review is a snapshot; besso keeps checking every lane as rules change, and your advisors can use the output.',
+mines:['After your last review, who kept checking when agreements and tariffs changed?','If the advisor team rotates, what knowledge stays with you?','Under a contingent fee, what share of savings goes out each year, and for how long?'],
+obj:[
+{o:'"KPMG got us big savings last time."',r:'Acknowledge: that is real value; KPMG reports cases near 75% duty savings in year one [S20]. Explore: are those savings still holding? Respond: besso keeps them current. Confirm: shall we check?'},
+{o:'"We only pay advisors if they find savings."',r:'Acknowledge: low risk is attractive. Explore: what is the total paid out over three years? Respond: compare that with a flat besso fee. Confirm: shall we model both?'},
+{o:'"We need someone to deal with customs."',r:'Acknowledge: that needs people. Explore: who does it today? Respond: keep them; besso gives them the analysis and the legal trace. Confirm: can we include them in the next call?'}],
+defend:[
+{t:'"AI tools miss context."',d:'Agree, then show the human review step and the trade-law team.',s:[2,5]},
+{t:'"Your findings need an advisor to implement anyway."',d:'Yes. Position besso as the analysis layer that makes that work cheaper and repeatable.'}],
+sw:{s:['Judgment, implementation and dealings with authorities [S21]','Flexible fixed or contingent fees [S19]','Increasingly use their own data tools, e.g. AI analysis of US ACE data [S24]','Genuinely better at hands-on change and defence in disputes'],w:['Project-based: savings can erode between reviews '+tags('F'),'Cost scales with people and hours '+tags('F'),'Knowledge can leave with the team '+tags('F')]},
+price:['Model: fixed and/or contingent fees'+sr([19])+' '+tags('R'),'Contingency share: '+G('[Typical % of savings — field intel]')+' '+tags('F'),'Frame ours: total paid over three years under contingency versus a besso subscription '+G('[besso fee model]')],
+proof:[['WTO case: ongoing monitoring keeps savings in place','C',[2]],['Advisory board with former Swiss trade negotiators','C',[5]],['Team: US$240M recurring savings across 36 projects, previous roles','C',[6]]],
+talk:['A review tells you where you stood. besso tells you where you stand every week.','Keep your advisors. Give them better data.','Contingency fees feel free. Over three years, they are rarely the cheapest option.'],
+dont:['Do not criticise named firms','Do not claim to replace legal advice','Do not imply besso negotiates with customs authorities']}
+];
+const DN={id:'do-nothing',name:'Do nothing (spreadsheets and the in-house team)',short:'Do nothing',desc:'The status quo: manual checks, PDFs, ad hoc consultants.',threat:3,
+line:'Make the cost of today\'s process visible in the buyer\'s own numbers, then make the first step small and safe.'};
+const all=[...C,DN];
+const thr=n=>'<span class="thr">'+[1,2,3].map(i=>'<i class="'+(i<=n?'on':'')+'"></i>').join('')+(n==3?'High':'Medium')+'</span>';
+const cp=(t)=>'<div class="copyrow"><p>'+t+'</p><button class="cp" type="button" data-t="'+t.replace(/<[^>]+>/g,'').replace(/"/g,'&quot;')+'">Copy</button></div>';
+document.getElementById('strip').innerHTML=all.map(c=>'<button class="tile" type="button" data-go="'+c.id+'"><h3>'+c.short+'</h3>'+thr(c.threat)+'<p>'+c.line.split(':')[0].split('.')[0]+'.</p></button>').join('');
+document.getElementById('tabs').innerHTML=all.map(c=>'<a href="#'+c.id+'">'+c.short+'</a>').join('');
+document.getElementById('srcs').innerHTML=S.map((s,i)=>'<li id="src-'+(i+1)+'"><a href="'+s[1]+'">'+s[0]+'</a> — '+s[2]+'</li>').join('');
+const head=c=>'<div class="chead"><h2>'+c.name+'</h2><span class="small">'+c.desc+' · Industry-neutral · Last verified 21 Nov 2026 · Owner '+G('[name]')+'</span></div><div class="oneline">'+c.line+'</div>';
+const card=c=>head(c)+'<div class="front"><div class="g2"><div class="box"><h4>When you meet them</h4><ul class="list">'+c.meet.map(m=>'<li>'+m+' '+tags('F')+'</li>').join('')+'</ul></div><div class="box"><h4>Their pitch</h4><p style="margin:0 0 10px">'+c.pitch+sr(c.pitchS)+' '+tags('R')+'</p><h4>What they say about us</h4><p style="margin:0 0 6px">'+c.they+' '+tags(c.theyT)+'</p><p style="margin:0"><b>Our reply:</b> '+c.reply+'</p></div></div>'
++'<div class="g2" style="margin-top:20px"><div class="box"><h4>Why we win</h4>'+c.win.map(w=>'<div class="pt"><b>'+w.t+' '+tags(w.tg)+sr(w.s)+'</b><dl><dt>Fact</dt><dd>'+w.f+'</dd><dt>Impact</dt><dd>'+w.i+'</dd><dt>Act</dt><dd>'+w.a+'</dd><dt>Proof</dt><dd>'+w.p+'</dd></dl></div>').join('')+'</div><div class="box"><h4>Why we lose</h4>'+c.lose.map(l=>'<div class="pt"><b>'+l.t+' '+tags('F')+'</b><dl><dt>Avoid</dt><dd>'+l.h+'</dd></dl></div>').join('')+'<p class="small" style="margin:8px 0 0">'+G('[Replace with real loss reasons from win/loss reviews]')+'</p></div></div>'
++'<div class="g2" style="margin-top:20px"><div class="box hl"><h4>Quick dismiss '+tags('C')+'</h4>'+cp(c.dismiss)+'</div><div class="box hl"><h4>Landmines: questions to ask '+tags('C')+'</h4>'+c.mines.map(cp).join('')+'</div></div></div>'
++'<details class="back"><summary>Back of card: objections, pricing, proof, talk tracks</summary>'
++'<div class="sec"><h4>Objections they trigger</h4><div class="scroll"><table class="stack"><thead><tr><th>Objection</th><th>Acknowledge, explore, respond, confirm</th></tr></thead><tbody>'+c.obj.map(o=>'<tr><td><b>'+o.o+'</b></td><td>'+o.r+'</td></tr>').join('')+'</tbody></table></div></div>'
++'<div class="sec"><h4>Landmine defence: traps they set for us</h4><ul class="list">'+c.defend.map(d=>'<li><b>'+d.t+'</b> '+d.d+sr(d.s)+'</li>').join('')+'</ul></div>'
++'<div class="sec g2"><div class="box"><h4>Their strengths</h4><ul class="list">'+c.sw.s.map(x=>'<li>'+x+'</li>').join('')+'</ul></div><div class="box"><h4>Their weaknesses '+tags('I')+'</h4><ul class="list">'+c.sw.w.map(x=>'<li>'+x+'</li>').join('')+'</ul></div></div>'
++'<div class="sec"><h4>Pricing and packaging '+tags('I')+'</h4><ul class="list">'+c.price.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'
++'<div class="sec"><h4>Proof to show</h4><ul class="list">'+c.proof.map(p=>'<li>'+p[0]+' '+tags(p[1])+sr(p[2])+'</li>').join('')+'</ul><p class="small">Named customers stay Internal only until each one has approved use of its name.</p></div>'
++'<div class="sec"><h4>Talk tracks '+tags('C')+'</h4>'+c.talk.map(cp).join('')+'</div>'
++'<div class="sec"><h4>Don\'ts</h4><ul class="list">'+c.dont.map(x=>'<li>'+x+'</li>').join('')+'</ul></div></details>';
+const dn=()=>head(DN)+'<div class="front"><div class="g2"><div class="box"><h4>Why buyers stay put</h4><ul class="list"><li>Duty feels like a fixed cost of doing business, so nobody owns the savings '+tags('F')+'</li><li>Missed preferences are invisible: no invoice shows them '+tags('F')+'</li><li>ERP and supplier data are hard to extract; besso needs transaction-level data'+sr([2])+' '+tags('R')+'</li><li>The team is busy firefighting tariff changes '+tags('F')+'</li><li>Most companies still manage FTAs manually, so manual feels normal'+sr([22])+' '+tags('R')+'</li></ul></div>'
++'<div class="box"><h4>Cost of inaction, in the buyer\'s terms</h4><ul class="list"><li>besso\'s figures: preferences missed on about 30% of eligible shipments, costing mid-size importers US$2M–15M a year'+sr([1])+' '+tags('R')+' — present as besso\'s estimate</li><li>Penalty risk: one besso client paid a multimillion-dollar fine an automated check could have flagged'+sr([2])+' '+tags('R')+'</li><li>Their own number: '+G('[Annual duty paid × share of lanes never screened]')+' — work this out with the buyer</li></ul></div></div>'
++'<div class="g2" style="margin-top:20px"><div class="box"><h4>The fear of choosing wrong</h4><ul class="list"><li>A young vendor that may not be around in five years</li><li>Sharing ERP and supplier data</li><li>AI errors leading to rejected claims</li><li>Changing claims may invite an audit</li></ul></div><div class="box"><h4>Make the decision feel safe</h4><ul class="list"><li>Start small: one region or subsidiary screening '+G('[confirm offer, scope and fee]')+'</li><li>Human-in-the-loop review and a trace to the legal text for every finding'+sr([2])+'</li><li>References from similar multinationals '+G('[approved references]')+'</li><li>Phased rollout: screen, then monitor, then scenarios</li><li>Guarantee or success-based option: '+G('[confirm with besso leadership]')+'</li></ul></div></div>'
++'<div class="g2" style="margin-top:20px"><div class="box hl"><h4>Landmines '+tags('C')+'</h4>'+['How much duty did you pay last year, and what share of it was ever checked for preferences?','Which subsidiaries or lanes has nobody looked at in the last two years?','When a trade agreement changes, how do you find out, and how fast?'].map(cp).join('')+'</div><div class="box hl"><h4>Talk tracks '+tags('C')+'</h4>'+['You are not choosing a system yet. You are finding out how much money is on the table.','Duty you never claimed does not show up on any invoice. That is why it stays missed.','Start with one region. If we find nothing, you have your answer.'].map(cp).join('')+'</div></div></div>';
+const show=()=>{const id=(location.hash||'#onesource').slice(1);const c=all.find(x=>x.id===id)||C[0];
+document.getElementById('card').innerHTML='<section class="card">'+(c.id==='do-nothing'?dn():card(c))+'</section>';
+document.querySelectorAll('#tabs a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+c.id));
+document.querySelectorAll('.tile').forEach(t=>t.setAttribute('aria-current',t.dataset.go===c.id));};
+document.getElementById('strip').addEventListener('click',e=>{const t=e.target.closest('.tile');if(t){location.hash=t.dataset.go;document.getElementById('tabs').scrollIntoView({behavior:'smooth'});}});
+document.addEventListener('click',e=>{const b=e.target.closest('.cp');if(!b)return;const done=()=>{b.textContent='Copied';b.classList.add('done');setTimeout(()=>{b.textContent='Copy';b.classList.remove('done')},1500)};
+try{navigator.clipboard.writeText(b.dataset.t).then(done,()=>{b.textContent='Select text';});}catch(err){b.textContent='Select text';}});
+window.addEventListener('hashchange',show);show();
+}
+</script>
+</body>
+</html>

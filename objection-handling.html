@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objection handling · besso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a seller's pocket script — calm, short, honest; never argue, always ask.
+   IDEA: the back of the battlecards pulled out into one drill sheet, sorted by who the buyer compares us with.
+   PICTURE: the four-step answer track (acknowledge, explore, respond, confirm) laid out as one row under each objection.
+   COLOUR and TYPE: Byzantine purple #702963, near-black #1F1A1E, tint #F6F1F5; Montserrat, same as the battlecards.
+   LAYOUT: purple header band, filter row and search, objection cards in one column, tough questions table, sources. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#1F1A1E);--ink:light-dark(#1F1A1E,#F3ECF1);--mut:light-dark(#5f5560,#b9adb6);
+--tint:light-dark(#F6F1F5,#2a2128);--line:light-dark(#e4d9e1,#3d313a);--pur:light-dark(#702963,#d59ac7);
+--purbg:#702963;--hl:light-dark(#f1e3ed,#3a2535)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Montserrat,system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,52px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.scroll{overflow-x:auto}
+header.band{background:var(--purbg);color:#fff;padding-bottom:clamp(40px,5vw,64px)}
+header h1{font-size:clamp(30px,4.4vw,48px);line-height:1.05;margin:0 0 12px;font-weight:700;text-wrap:balance;max-width:22ch}
+header p{margin:0;max-width:68ch;color:#f0dceb}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px;max-width:900px}
+.track div{border-top:3px solid #fff;padding-top:10px}
+.track b{display:block;font-size:15px}
+.track span{font-size:13.5px;color:#f0dceb;line-height:1.45;display:block}
+.tools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:-26px 0 8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(31,26,30,.08)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 14px Montserrat,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--purbg);border-color:var(--purbg);color:#fff}
+.chip:focus-visible,.cp:focus-visible,input:focus-visible{outline:3px solid var(--pur);outline-offset:2px}
+.chip em{font-style:normal;font-weight:400;opacity:.8;margin-inline-start:4px}
+.search{flex:1 1 220px;display:flex}
+.search input{width:100%;min-height:44px;font:16px Montserrat,sans-serif;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.count{font-size:14px;color:var(--mut);margin:18px 0 6px}
+.obj{border:1px solid var(--line);border-radius:12px;padding:20px;margin:0 0 14px;background:var(--bg)}
+.obj .top{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.obj h2{margin:0;font-size:clamp(19px,2.2vw,23px);line-height:1.25;font-weight:700;text-wrap:balance;flex:1 1 28ch}
+.who{font-size:13px;font-weight:600;color:var(--pur);background:var(--hl);border-radius:20px;padding:4px 10px;white-space:nowrap}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 0;padding:0;list-style:none}
+.steps li{background:var(--tint);border-radius:8px;padding:12px 14px;font-size:14.5px;line-height:1.5}
+.steps li b{display:block;color:var(--pur);font-size:13px;margin-bottom:4px}
+.steps li:nth-child(3){background:var(--hl)}
+.foot{display:flex;justify-content:flex-end;margin-top:12px}
+.cp{min-height:44px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 14px Montserrat,sans-serif;cursor:pointer}
+.gap{background:light-dark(#fff3c4,#4a3f10);color:var(--ink);border-radius:4px;padding:0 4px;font-weight:600}
+.empty{padding:28px;text-align:center;color:var(--mut);border:1px dashed var(--line);border-radius:12px}
+h3.sec{font-size:clamp(24px,3vw,32px);line-height:1.1;margin:44px 0 6px}
+p.lead{margin:0 0 16px;color:var(--mut);max-width:70ch}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:start;vertical-align:top;padding:12px 10px;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mut);font-weight:600}
+td:first-child{font-weight:600;width:34%}
+td:nth-child(2){width:18%;color:var(--pur);font-weight:600;font-size:14px}
+a{color:var(--pur)}
+footer.band{background:var(--tint);margin-top:48px}
+footer h4{margin:0 0 8px;font-size:16px}
+footer ol{font-size:14px;padding-inline-start:28px;margin:0 0 12px}
+.small{font-size:13.5px;color:var(--mut);max-width:80ch}
+@media(max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.track,.steps{grid-template-columns:minmax(0,1fr)}.tools{margin-top:-20px}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start;width:auto}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;font-weight:600;color:var(--mut)}.stack td:empty{display:none}}
+@media print{.sn,.tools,.cp{display:none}header.band{background:none;color:#000}header p,.track span{color:#000}.track div{border-color:#000}.obj{break-inside:avoid}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<script src="site.js" data-page="objections"></script>
+<header class="band"><div class="wrap">
+<h1>Answer every objection in four steps, and end on a question</h1>
+<p>The objections besso sellers hear when a buyer compares besso with ONESOURCE, SAP GTS, Descartes or their trade advisors, taken from the back of the <a href="battlecards.html" style="color:#fff">battlecards</a> and set out as one drill sheet.</p>
+<div class="track" aria-label="The four steps">
+<div><b>Acknowledge</b><span>Agree with what is true. Never argue first.</span></div>
+<div><b>Explore</b><span>Ask one question to find the real gap.</span></div>
+<div><b>Respond</b><span>Give besso's answer to that gap only.</span></div>
+<div><b>Confirm</b><span>Close with a small, concrete next step.</span></div>
+</div>
+</div></header>
+
+<main class="band" style="padding-top:0"><div class="wrap">
+<div class="tools">
+<div class="chips" id="chips" role="group" aria-label="Filter by alternative"></div>
+<label class="search"><span style="position:absolute;left:-9999px">Search objections</span><input id="q" type="search" placeholder="Search, e.g. security, SAP, fee" autocomplete="off"></label>
+</div>
+<p class="count" id="count" aria-live="polite"></p>
+<div id="list"></div>
+
+<h3 class="sec">Tough questions to defend</h3>
+<p class="lead">Questions buyers ask to test besso, with the line to take. Highlighted brackets are facts to confirm with besso before using.</p>
+<div class="scroll"><table class="stack"><thead><tr><th>Question</th><th>Usually from buyers weighing</th><th>How to answer</th></tr></thead><tbody id="tough"></tbody></table></div>
+</div></main>
+
+<footer class="band"><div class="wrap">
+<h4>Sources</h4>
+<ol id="srcs"></ol>
+<p class="small">Built from the besso battlecards (last verified 21 Nov 2026). No win/loss data or field intel from besso was available, and besso's own figures are self-reported. Prepared by Ilia Paraskevopoulos with Claude; not official besso material.</p>
+</div></footer>
+
+<script>
+{
+const C=[{"id": "onesource", "name": "Thomson Reuters ONESOURCE Global Trade", "short": "ONESOURCE", "desc": "Enterprise global trade management suite, including FTA Management.", "obj": [{"o": "\"We already pay for ONESOURCE FTA Management.\"", "r": "Acknowledge: using what you own makes sense. Explore: is it set up for every lane and subsidiary? Respond: besso screens the whole footprint and feeds findings into ONESOURCE. Confirm: would a one-region screen show whether there is a gap?"}, {"o": "\"Thomson Reuters content is the benchmark.\"", "r": "Acknowledge: their content is strong. Explore: is the gap content, or applying it to your own flows? Respond: besso applies rules to your transactions and shows the clause behind each result. Confirm: shall we test it on lanes you know well?"}, {"o": "\"We cannot add another vendor to security review.\"", "r": "Acknowledge: reviews take time. Explore: what does your team need first? Respond: we start on a data extract, not a system connection. Confirm: can we send our security pack this week? <span class=\"gap\">[Confirm besso security certifications]</span>"}, {"o": "\"Our implementation partner can run this analysis.\"", "r": "Acknowledge: partners know your setup. Explore: would they repeat it every time a rule changes? Respond: besso keeps monitoring after the first screen. Confirm: who covers that today?"}], "defend": [{"t": "\"How many jurisdictions and updates do you cover?\"", "d": "Do not play the volume game. State ours (about 700 agreements, 1,250+ regulations and tariff schedules monitored), then ask which corridors matter to them.", "s": [1, 2]}, {"t": "\"Can besso file declarations or screen parties?\"", "d": "Say no plainly. Move to the question that matters: how much duty is being overpaid today."}, {"t": "\"Who checks your AI?\"", "d": "Human-in-the-loop review by trade lawyers, statistical checks, and a trace to legal text. Do not lead with the 99.9% accuracy figure; it is self-reported.", "s": [2]}]}, {"id": "sap-gts", "name": "SAP GTS — Trade Preference Management", "short": "SAP GTS", "desc": "Preference determination and declarations inside the SAP landscape.", "obj": [{"o": "\"GTS already does FTAs.\"", "r": "Acknowledge: it does, well. Explore: for how many of your agreements and lanes? Respond: besso screens all of them and shows where configuration would pay. Confirm: shall we compare the list?"}, {"o": "\"Our data cannot leave SAP.\"", "r": "Acknowledge: a fair rule. Explore: what can be shared under your policy? Respond: we can start with a scoped extract. Confirm: who sets the policy? <span class=\"gap\">[Confirm hosting and data residency options]</span>"}, {"o": "\"Our SAP partner can add more agreements.\"", "r": "Acknowledge: they can. Explore: which ones, and at what cost each? Respond: besso tells you which agreements are worth configuring first. Confirm: would that make the partner's work cheaper?"}], "defend": [{"t": "\"Is besso SAP-certified?\"", "d": "<span class=\"gap\">[Confirm any SAP integration or certification]</span>. If none, say so and explain the extract-and-return model."}, {"t": "\"Two sources of truth will confuse auditors.\"", "d": "besso does not issue declarations. GTS stays the record; besso supplies the analysis and the legal trace."}]}, {"id": "descartes", "name": "Descartes Free Trade Intelligence (FTI AI)", "short": "Descartes FTI", "desc": "AI-enabled FTA qualification, launched August 2026.", "obj": [{"o": "\"Descartes is a listed company. You are a startup.\"", "r": "Acknowledge: a fair concern. Explore: what would make it safe? Respond: start with one region, references and a clear exit. Confirm: what would procurement need to see?"}, {"o": "\"Their AI is explainable too.\"", "r": "Acknowledge: yes, they stress that. Explore: explained by whom? Respond: besso traces to the legal text and a trade lawyer reviews it. Confirm: shall we compare on one product?"}, {"o": "\"We already use Descartes for filing.\"", "r": "Acknowledge: one vendor is simpler. Explore: how much duty is unclaimed today? Respond: we size it first, and our output can feed your filing. Confirm: is that worth four weeks?"}], "defend": [{"t": "\"Pure LLMs hallucinate on rules of origin.\"", "d": "Agree that pure LLMs are not enough. besso codifies rules into decision models, runs statistical checks and keeps humans in the loop.", "s": [2, 7]}, {"t": "\"Can you manage supplier declarations?\"", "d": "<span class=\"gap\">[Confirm besso supplier-declaration features]</span>. If not, say so and show how findings hand off to their process."}]}, {"id": "advisors", "name": "Trade and customs advisors (Big Four, brokers)", "short": "Advisors", "desc": "For example KPMG Trade & Customs, Livingston, Flexport Trade Advisory.", "obj": [{"o": "\"KPMG got us big savings last time.\"", "r": "Acknowledge: that is real value; KPMG reports cases near 75% duty savings in year one [S20]. Explore: are those savings still holding? Respond: besso keeps them current. Confirm: shall we check?"}, {"o": "\"We only pay advisors if they find savings.\"", "r": "Acknowledge: low risk is attractive. Explore: what is the total paid out over three years? Respond: compare that with a flat besso fee. Confirm: shall we model both?"}, {"o": "\"We need someone to deal with customs.\"", "r": "Acknowledge: that needs people. Explore: who does it today? Respond: keep them; besso gives them the analysis and the legal trace. Confirm: can we include them in the next call?"}], "defend": [{"t": "\"AI tools miss context.\"", "d": "Agree, then show the human review step and the trade-law team.", "s": [2, 5]}, {"t": "\"Your findings need an advisor to implement anyway.\"", "d": "Yes. Position besso as the analysis layer that makes that work cheaper and repeatable."}]}];
+const S={"1": ["Startup Researcher — Besso raises €4.29M (customer list, 1,250 regulations, missed-preference and cost figures)", "https://www.startupresearcher.com/news/besso-raises-4-29-million-to-expand-ai-trade-compliance-platform", "Oct 2026"], "2": ["WTO — AI case study: Besso (method, ~700 agreements, US$40M case, limits)", "https://www.wto.org/english/tratop_e/dtt_e/aicasestudy/besso_e.htm", "2026"], "5": ["besso.com — About us (team, academic and strategic advisors)", "https://www.besso.com/about-us", "Nov 2026"], "7": ["World Trade Institute blog — Besso on trade expertise and explicability", "https://www.wti.org/events-news/blog/1287/from-firefighting-to-foresight-why-trade-expertise-must-lead-the-digitalization-of-trade-compliance/", "Apr 2026"], "20": ["KPMG US — Resource relief in trade and customs (~75% duty savings case)", "https://kpmg.com/us/en/articles/2025/need-resource-relief-trade-and-customs.html", "2025"]};
+const steps=['Acknowledge','Explore','Respond','Confirm'];
+const srcLink=t=>t.replace(/\[S(\d+)\]/g,(m,n)=>'<a href="#src-'+n+'">[S'+n+']</a>');
+const parse=r=>{const parts=r.split(/(Acknowledge|Explore|Respond|Confirm):\s*/);const o={};for(let i=1;i<parts.length;i+=2){const t=parts[i+1].trim();o[parts[i]]=t.charAt(0).toUpperCase()+t.slice(1);}return o;};
+const plain=h=>h.replace(/<[^>]+>/g,'');
+const rows=[];
+C.forEach(c=>c.obj.forEach((o,i)=>rows.push({id:c.id+'-'+(i+1),cid:c.id,who:c.short,o:o.o,st:parse(o.r),raw:o.r})));
+let filter='all';
+const chips=document.getElementById('chips'),list=document.getElementById('list'),q=document.getElementById('q'),count=document.getElementById('count');
+chips.innerHTML=[{id:'all',short:'All',n:rows.length}].concat(C.map(c=>({id:c.id,short:c.short,n:c.obj.length}))).map(c=>'<button class="chip" type="button" data-f="'+c.id+'" aria-pressed="'+(c.id==='all')+'">'+c.short+'<em>'+c.n+'</em></button>').join('');
+const draw=()=>{
+  const term=q.value.trim().toLowerCase();
+  const shown=rows.filter(r=>(filter==='all'||r.cid===filter)&&(!term||plain(r.o+' '+r.raw+' '+r.who).toLowerCase().includes(term)));
+  count.textContent=shown.length+' of '+rows.length+' objections';
+  list.innerHTML=shown.length?shown.map(r=>'<article class="obj" id="'+r.id+'"><div class="top"><h2>'+r.o+'</h2><span class="who">vs '+r.who+'</span></div><ol class="steps">'+steps.map(s=>'<li><b>'+s+'</b>'+srcLink(r.st[s]||'')+'</li>').join('')+'</ol><div class="foot"><button class="cp" type="button" data-id="'+r.id+'">Copy answer</button></div></article>').join(''):'<p class="empty">No objection matches. Try another word or pick All.</p>';
+};
+chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;filter=b.dataset.f;chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));draw();});
+q.addEventListener('input',draw);
+list.addEventListener('click',e=>{const b=e.target.closest('.cp');if(!b)return;const r=rows.find(x=>x.id===b.dataset.id);const txt=plain(r.o)+'\n'+steps.map(s=>s+': '+plain(r.st[s]||'')).join('\n');
+  const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy answer',1600);};
+  try{navigator.clipboard.writeText(txt).then(done,()=>{b.textContent='Copy not allowed here';});}catch(err){b.textContent='Copy not allowed here';}});
+document.getElementById('tough').innerHTML=C.flatMap(c=>c.defend.map(d=>'<tr><td>'+d.t+'</td><td>'+c.short+'</td><td>'+d.d+(d.s&&d.s.length?' <span style="font-size:13px">['+d.s.map(n=>'<a href="#src-'+n+'">S'+n+'</a>').join(', ')+']</span>':'')+'</td></tr>')).join('');
+document.getElementById('srcs').innerHTML=Object.keys(S).map(n=>'<li value="'+n+'" id="src-'+n+'"><a href="'+S[n][1]+'">'+S[n][0]+'</a> — '+S[n][2]+'</li>').join('');
+draw();
+}
+</script>
+</body>
+</html>
