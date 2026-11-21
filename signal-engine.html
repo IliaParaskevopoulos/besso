@@ -6,6 +6,7 @@
 <title>Signal Engine · besso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f5f4ef; --panel:#ffffff; --ink:#14213d; --ink2:#4a5672; --muted:#8a93a8; --line:#e3e1d8;
@@ -96,6 +97,61 @@ textarea{min-height:180px;resize:vertical}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#702963;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
 .toast.on{opacity:1}
 body.no-ai #newBtn, body.no-ai #dAI{display:none}
+/* besso-style app shell (after besso's public trial UI) */
+:root{--bg:#F3F4F6;--panel:#fff;--ink:#1D1D1F;--ink2:#55595F;--muted:#8A8F98;--line:#E4E6EA;--side:#E7E9EC;--accent:#702963;--accent-soft:#F4EAF2;--radius:12px}
+body{font:15px/1.5 Figtree,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:22px 28px 0}
+h1{font-size:24px;font-weight:600}
+.pipeline div,.banner{border-radius:10px}
+.banner{background:#E9EBEE}
+nav button.on{border-bottom-color:var(--accent)}
+.grid{grid-template-columns:300px minmax(0,1fr);gap:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,20,30,.05)}
+.side{background:var(--side);padding:18px 14px;min-height:100%}
+.side .toolbar{margin:0 4px 14px}
+.side h2{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.event{background:#F7F8F9;border:1px solid #D9DCE1;border-radius:10px;padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.event:hover{border-color:#B9BEC6}
+.event.on{background:#fff;border-color:#C7CBD2;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.event .ln{font-weight:600;font-size:15px;line-height:1.3}
+.event .pr{font-size:13px;color:var(--ink2);margin-top:2px}
+.event .m{margin-top:8px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.dot.threat{background:#D92D20}.dot.opportunity{background:#12B76A}.dot.compliance{background:#F79009}
+.mainp{padding:26px 28px 28px;min-width:0}
+.lanehd{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:18px}
+.lanehd h2{font-size:clamp(24px,2.6vw,32px);font-weight:500;margin:0;letter-spacing:-.01em}
+.lanehd .pr{color:var(--ink2);font-size:17px}
+.alertbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;border-radius:12px;padding:16px 22px;margin-bottom:22px}
+.alertbar b{font-weight:700;font-size:17px}
+.alertbar span{font-size:17px}
+.alertbar svg{width:26px;height:26px;flex:none}
+.alertbar.threat{background:#FDECEC;color:#B42318}
+.alertbar.opportunity{background:#E7F6EE;color:#067647}
+.alertbar.compliance{background:#FEF4E6;color:#B54708}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 26px}
+.cl{font-size:14px;color:var(--ink2);margin:0 0 8px;font-weight:500}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 8px rgba(20,20,30,.06);padding:20px 24px;min-height:110px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.card .v{font-size:30px;font-weight:500;line-height:1.1}
+.card .s{font-size:14px;color:var(--ink2);margin-top:4px}
+.card .t1{font-size:19px;font-weight:500;line-height:1.3}
+.card .t2{font-size:15px;color:var(--ink2);margin-top:4px}
+.card .icon{width:64px;align-self:stretch;margin:-20px -24px -20px 0;background:#F7F8F9;border-left:1px solid var(--line);border-radius:0 12px 12px 0;display:grid;place-items:center;flex:none}
+.card .icon svg{width:26px;height:26px;color:#55595F}
+.imp{display:flex;gap:24px;justify-content:space-between;width:100%}
+.imp div:last-child{text-align:right}
+.calc{display:inline-flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 8px rgba(20,20,30,.06);padding:18px 26px}
+.calc button{display:inline-flex;align-items:center;gap:10px;font:500 16px Figtree,sans-serif;background:#F5F6F8;border:1px solid #DDE0E4;border-radius:22px;padding:10px 20px;cursor:pointer;color:var(--ink)}
+.calc button:hover{background:#ECEEF1}
+.calc a{font-size:14px;color:var(--ink2)}
+.calcbox{display:none;margin-top:12px;background:#F7F8F9;border-radius:10px;padding:14px 16px;font-size:14px;color:var(--ink2);max-width:760px}
+.calcbox.on{display:block}
+.summ{margin:22px 0 0;color:var(--ink2);font-size:15px;max-width:900px}
+.accwrap{margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
+.accwrap h2{font-size:20px;font-weight:600}
+th{text-transform:none;letter-spacing:0;font-size:13px}
+.btn{border-radius:22px;font-family:Figtree,sans-serif;white-space:nowrap}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}.cards{grid-template-columns:minmax(0,1fr)}.mainp{padding:20px 16px}}
+
 </style>
 </head>
 <body>
@@ -126,18 +182,16 @@ body.no-ai #newBtn, body.no-ai #dAI{display:none}
   <!-- SIGNALS -->
   <section class="view on" id="v-signals">
     <div class="grid">
-      <div>
-        <div class="toolbar"><h2 style="margin:0">Detected events</h2><button class="btn small" id="newBtn">+ New notice</button></div>
+      <div class="side">
+        <div class="toolbar"><h2 style="margin:0">Signals</h2><button class="btn small" id="newBtn">+ New notice</button></div>
         <div id="eventList"></div>
       </div>
-      <div>
-        <div class="panel" id="eventDetail"></div>
-        <div class="panel" style="margin-top:16px">
+      <div class="mainp">
+        <div id="eventDetail"></div>
+        <div class="accwrap">
           <div class="toolbar">
             <h2 style="margin:0">Affected accounts <span class="note" id="matchCount"></span></h2>
-            <div style="display:flex;gap:8px">
-              <button class="btn ghost small" id="copyMatches">Copy as CSV</button>
-            </div>
+            <div style="display:flex;gap:8px"><button class="btn ghost small" id="copyMatches">Copy as CSV</button></div>
           </div>
           <div id="matches"></div>
         </div>
@@ -293,6 +347,7 @@ const REAL_ACCOUNTS = [
   {name:"Bühler", hq:"CH", url:"https://www.buhlergroup.com", segment:"Food processing machinery", hs:["8437","8438","8474"], origins:["CH","DE"], sources:[], inputs:[], markets:["EU","US","CN","ID","IN"], tags:["ICP3"]}
 ].map(a=>({tier:"", owner:"", ...a, stage:a.stage||""}));
 
+const UI = {"id-eu-cepa": {"lane": ["European Union", "Indonesia"], "prod": "Dairy, food & chemicals (Exports)", "kind": "Save — New preference", "kindsub": "EU–Indonesia CEPA signed", "alert": "New trade agreement", "tv": "Up to 25%", "tl": "Indonesian MFN tariff, chemicals", "tn": "Falls to 0%: 80% of tariff lines at entry into force, the rest over five years", "gd": "Dairy, processed food, chemicals, machinery", "gc": "04 / 17–21 / 28–38 / 84 (HS)"}, "eu-id-cepa": {"lane": ["Indonesia", "European Union"], "prod": "Palm oil, cocoa & coffee (Inputs)", "kind": "Save — New preference", "kindsub": "Duty-free quotas on Indonesian inputs", "alert": "New trade agreement", "tv": "Up to 12.8%", "tl": "EU MFN tariff, palm oil", "tn": "Duty-free quota of 1.9 Mt at entry into force, rising to 2.479 Mt", "gd": "Palm and palm kernel oil, fats, cocoa, coffee, spices, essential oils", "gc": "15 / 18 / 09 / 33 / 38 (HS)"}, "ch-cn-fta": {"lane": ["Switzerland", "China"], "prod": "Food, chemicals & machinery (Exports)", "kind": "Save — Upgraded preference", "kindsub": "Switzerland–China FTA upgrade signed", "alert": "Upgraded trade agreement", "tv": "77.5%", "tl": "Share of Swiss exports duty-free at entry into force", "tn": "Up to 99.8% in the medium term; direct-transport rule relaxed", "gd": "Dairy, confectionery, food, chemicals, machinery", "gc": "04 / 17–21 / 28–38 / 84 (HS)"}, "eu-in-fta": {"lane": ["European Union", "India"], "prod": "Chemicals & cosmetics (Exports)", "kind": "Save — Upcoming preference", "kindsub": "EU–India FTA heads to signature", "alert": "Trade agreement, awaiting signature", "tv": "Up to 22%", "tl": "Indian MFN tariff, chemicals", "tn": "Largely removed at entry into force; cosmetics over 5–7 years", "gd": "Chemicals and cosmetics", "gc": "28 / 29 / 32 / 34 / 38 / 3304 (HS)"}, "us-301-fl": {"lane": ["EU & Switzerland", "United States"], "prod": "All products (Exports)", "kind": "Comply — New tariff", "kindsub": "Section 301 forced-labour tariff", "alert": "Tariff increase", "tv": "10–12.5%", "tl": "Additional US tariff, all-in for EU and CH", "tn": "Pharmaceuticals and Section 232 goods exempt", "gd": "All products except pharmaceuticals and Section 232 goods", "gc": "All chapters (HS)"}, "eu-us-deal": {"lane": ["United States", "European Union"], "prod": "Industrial goods (Inputs & exports)", "kind": "Save — Tariff removed", "kindsub": "EU implements the US framework deal", "alert": "Trade agreement in force", "tv": "0%", "tl": "EU tariff on US industrial goods", "tn": "Agricultural and seafood access partly; safeguard clause applies", "gd": "Chemicals, plastics, machinery, electrical goods, instruments", "gc": "28 / 29 / 38 / 39 / 84 / 85 / 90 (HS)"}};
 let events = JSON.parse(JSON.stringify(REAL_EVENTS));
 let accounts = JSON.parse(JSON.stringify(REAL_ACCOUNTS));
 let selected = null;
@@ -384,46 +439,44 @@ function matchEvent(ev){
 }
 
 /* ---------- render ---------- */
+const ICON_ALERT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 15h6M9 18h4"/></svg>';
+const ICON_DOC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 3h9l4 4v6"/><path d="M14 3v4h4"/><path d="M5 3v18h7"/><path d="M8 10h6M8 13h4"/><circle cx="17.5" cy="17.5" r="4"/><path d="M16.3 16.4a1.3 1.3 0 1 1 1.6 1.3c-.3.1-.4.3-.4.6v.3M17.5 20.2v.1"/></svg>';
+const ICON_XL='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="11" height="16" rx="1.5"/><path d="M6 9l5 6M11 9l-5 6"/><path d="M14 7h6v10h-6M14 12h6M17 7v10"/></svg>';
+function ago(d){const n=days(D(d),TODAY);return n<=0?"today":n===1?"1 day ago":n<31?n+" days ago":"about "+Math.round(n/30)+" month"+(Math.round(n/30)>1?"s":"")+" ago";}
+function uiOf(ev){return UI[ev.id]||{lane:[(ev.origins||[]).join(", ")||"All origins",ev.imposer],prod:(ev.hs||[]).slice(0,4).join(", ")+" (HS)",kind:(ev.direction==="threat"?"Comply — ":"Save — ")+(TYPE_LABEL[ev.type]||ev.type),kindsub:ev.title.split(":")[0],alert:TYPE_LABEL[ev.type]||ev.type,tv:"—",tl:"Tariff from the notice",tn:"",gd:ev.title,gc:(ev.hs||[]).join(" / ")+" (HS)"};}
 function renderEvents(){
   const sorted = [...events].sort((a,b)=>freshness(b).f-freshness(a).f);
   if(!selected && sorted.length) selected = sorted[0].id;
   $("#eventList").innerHTML = sorted.map(ev=>{
-    const fr = freshness(ev), n = matchEvent(ev).length;
-    return `<div class="event ${ev.id===selected?"on":""}" data-id="${ev.id}">
-      <div class="t">${esc(ev.title)}</div>
-      <div class="m"><span class="tag ${esc(ev.direction)}">${esc(ev.direction)}</span>
-      <span>${esc(TYPE_LABEL[ev.type]||ev.type)}</span>·<span class="win ${fr.label}">${fr.label.toUpperCase()}${fr.byMilestone?" · milestone in "+fr.dm+"d":" · "+fr.d+"d old"}</span>·<span>${n} account${n===1?"":"s"}</span></div></div>`;
+    const fr = freshness(ev), n = matchEvent(ev).length, u = uiOf(ev);
+    return `<div class="event ${ev.id===selected?"on":""}" data-id="${ev.id}" role="button" tabindex="0">
+      <div class="ln">${esc(u.lane[0])} → ${esc(u.lane[1])}</div>
+      <div class="pr">${esc(u.prod)}</div>
+      <div class="m"><span><i class="dot ${esc(ev.direction)}"></i>${esc(u.kind.split(" — ")[0])}</span>·<span class="win ${fr.label}">${fr.label.toUpperCase()}</span>·<span>${n} account${n===1?"":"s"}</span></div></div>`;
   }).join("");
-  document.querySelectorAll(".event").forEach(el=>el.onclick=()=>{selected=el.dataset.id; render();});
+  document.querySelectorAll(".event").forEach(el=>{el.onclick=()=>{selected=el.dataset.id; render();};el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();el.click();}};});
 }
 
 function renderDetail(){
   const ev = events.find(e=>e.id===selected);
-  if(!ev){ $("#eventDetail").innerHTML = `<div class="empty">No event selected</div>`; return; }
-  const fr = freshness(ev);
-  const eff = ev.effective_date ? days(TODAY, D(ev.effective_date)) : null;
+  if(!ev){ $("#eventDetail").innerHTML = `<div class="empty">No signal selected</div>`; return; }
+  const fr = freshness(ev), u = uiOf(ev), m = matchEvent(ev);
+  const hot = m.filter(r=>r.score>=70).length;
+  const when = ev.effective_date ? "in force since "+fmtDate(ev.effective_date) : (ev.milestone ? ev.milestone.label.replace(/ \(.*\)$/,"")+": "+fmtDate(ev.milestone.date) : esc(ev.stage));
   $("#eventDetail").innerHTML = `
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
-      <span class="tag ${esc(ev.direction)}">${esc(ev.direction)}</span>
-      <span class="tag neutral">${esc(TYPE_LABEL[ev.type]||ev.type)}</span>
-      <span class="tag neutral">${esc(ev.stage)}</span>
-      <span class="note">Source: ${ev.url?`<a href="${esc(ev.url)}" target="_blank" rel="noopener">${esc(ev.source)}</a>`:esc(ev.source)}</span>
+    <div class="lanehd"><h2>${esc(u.lane[0])} → ${esc(u.lane[1])}</h2><span class="pr">${esc(u.prod)}</span></div>
+    <div class="alertbar ${esc(ev.direction)}">${ICON_ALERT}<b>${esc(u.kind)}</b><span>${esc(u.kindsub)}</span></div>
+    <div class="cards">
+      <div><p class="cl">Alert Information</p><div class="card"><div><div class="t1">${esc(u.alert)}</div><div class="t2">${ago(ev.published)} (${fmtDate(ev.published)}) · <span class="win ${fr.label}">${fr.label.toUpperCase()}</span></div></div></div></div>
+      <div><p class="cl">Impact</p><div class="card"><div class="imp"><div><div class="v">${m.length}</div><div class="s">Accounts affected</div></div><div><div class="v">${hot}</div><div class="s">Score 70+ (launch now)</div></div></div></div></div>
+      <div><p class="cl">Tariff (current)</p><div class="card"><div><div class="v">${esc(u.tv)}</div><div class="s">${esc(u.tl)}</div>${u.tn?`<div class="s" style="margin-top:6px">${esc(u.tn)}</div>`:""}</div><div class="icon" title="${esc(ev.stage)}">${ICON_DOC}</div></div></div>
+      <div><p class="cl">Goods & Classification</p><div class="card"><div><div class="t1">${esc(u.gd)}</div><div class="t2">${esc(u.gc)}</div></div></div></div>
     </div>
-    <h2 style="font-size:18px;margin:4px 0 6px">${esc(ev.title)}</h2>
-    <div style="color:var(--ink2)">${esc(ev.summary)}</div>
-    ${ev.evidence?`<div class="evidence">“${esc(ev.evidence)}”</div>`:""}
-    <div class="fields">
-      <div><label>Imposed by</label>${esc(ev.imposer)}</div>
-      <div><label>Affected origins</label>${esc((ev.origins||[]).join(", ")||"All origins")}${ev.exempt_origins&&ev.exempt_origins.length?`<div class="note">Exempt: ${esc(ev.exempt_origins.join(", "))}</div>`:""}</div>
-      <div><label>Product scope (HS)</label><span class="mono">${esc((ev.hs||[]).map(h=>h==="*"?"all products":h).join(" · "))}</span></div>
-      <div><label>Published</label>${fmtDate(ev.published)}</div>
-      <div><label>Effective</label>${fmtDate(ev.effective_date)}${eff!==null?` <span class="note">(${eff>=0?"in "+eff+"d":Math.abs(eff)+"d ago"})</span>`:""}</div>
-      <div><label>Next milestone</label>${ev.milestone?`${esc(ev.milestone.label)}<div class="note">${fmtDate(ev.milestone.date)} (${fr.dm>=0?"in "+fr.dm+"d":"passed"})</div>`:"—"}</div>
-      <div><label>Severity</label>${"●".repeat(ev.severity)}${"○".repeat(5-ev.severity)}</div>
-      ${ev.confidence!=null?`<div><label>Extraction confidence</label>${Math.round(ev.confidence*100)}%</div>`:""}
-      <div><label>Campaign window</label><span class="win ${fr.label}">${fr.label.toUpperCase()}</span> · ${fr.byMilestone?"milestone approaching":"published "+fr.d+"d ago"}<div class="fresh"><i style="width:${Math.round(fr.f*100)}%"></i></div></div>
-    </div>
-    ${ev.hs_note?`<div class="note"><b>How the engine maps it:</b> ${esc(ev.hs_note)}</div>`:""}`;
+    <div style="margin-top:22px"><p class="cl">Matching and Calculations</p>
+      <div class="calc"><button type="button" id="calcBtn" aria-expanded="false">${ICON_XL}Calculation Details</button>${ev.url?`<a href="${esc(ev.url)}" target="_blank" rel="noopener">See Source ↗</a>`:""}</div>
+      <div class="calcbox" id="calcBox"><b>${esc(ev.title)}</b><br>${esc(ev.summary)}<br><br><b>How the engine maps it:</b> ${esc(ev.hs_note||"HS × trade corridor match against the account book.")}<br><b>Timing:</b> ${when}. <b>Score</b> = severity (${ev.severity}/5) × HS match × corridor × fit × pipeline stage × freshness × urgency.<br><b>Source:</b> ${esc(ev.source)}</div>
+    </div>`;
+  const cb=$("#calcBtn");cb.onclick=()=>{const on=$("#calcBox").classList.toggle("on");cb.setAttribute("aria-expanded",String(on));};
 }
 
 function renderMatches(){
