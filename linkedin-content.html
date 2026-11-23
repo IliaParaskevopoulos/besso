@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LinkedIn content · besso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pm.css">
+<style>
+/* VOICE: a content lead showing the CEO a month of LinkedIn, plain and ready to post.
+   IDEA: a LinkedIn feed laid out like an exhibition wall: each format as it would appear in the feed, with its spec label underneath.
+   PICTURE: three real creatives from the set, fanned in the header like posts in a feed.
+   COLOUR and TYPE: Byzantine purple #702963, white, near-black #1F1A1E, lilac accent #f2a7dc; Montserrat.
+   LAYOUT: purple header with the fan, organic wall, paid wall with A/B/C variants, then the weekly mix. */
+header.band .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:center}
+.fan{position:relative;height:clamp(300px,34vw,430px)}
+.fan .stage{position:absolute;box-shadow:0 22px 50px rgba(20,8,18,.45);border-radius:6px}
+.fan .f1{width:46%;left:2%;top:8%;transform:rotate(-6deg)}
+.fan .f2{width:46%;left:30%;top:0;transform:rotate(2deg);z-index:2}
+.fan .f3{width:58%;right:0;bottom:4%;transform:rotate(5deg);z-index:3}
+.stage{position:relative;width:100%;overflow:hidden;background:#702963}
+.art{position:absolute;left:0;top:0;transform-origin:0 0;font-family:Montserrat,sans-serif;overflow:hidden;color:#fff;background:#702963}
+.wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:start}
+.post{background:light-dark(#fff,#2a2128);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.ph{display:flex;gap:10px;align-items:center;padding:14px 16px 8px}
+.av{width:44px;height:44px;border-radius:50%;background:#702963;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px}
+.av.p{background:#4a3f48}
+.ph b{display:block;font-size:15px;line-height:1.2}.ph small{color:var(--mut);font-size:13px}
+.txt{padding:4px 16px 12px;font-size:14.5px;white-space:pre-line;line-height:1.5}
+.txt.fold{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.more{background:none;border:0;padding:0 16px 12px;color:var(--mut);font:600 14px Montserrat,sans-serif;cursor:pointer;min-height:32px}
+.more:hover{color:var(--pur)}
+.pf{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding:8px;color:var(--mut);font-size:13.5px;font-weight:600}
+.lk{display:flex;flex-direction:column;gap:2px;padding:10px 16px;background:var(--tint)}
+.lk b{font-size:15px}.lk small{color:var(--mut)}
+.adbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;background:var(--tint)}
+.adbar b{font-size:15px;line-height:1.3}
+.btnli{flex:none;border:1.5px solid var(--pur);color:var(--pur);border-radius:20px;padding:6px 14px;font-weight:700;font-size:14px;white-space:nowrap}
+.spec{padding:12px 16px 16px;border-top:1px solid var(--line);font-size:13.5px}
+.spec h3{margin:0 0 4px;font-size:16px}
+.spec p{margin:0 0 8px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chips span{background:var(--hl);color:var(--pur);border-radius:6px;padding:3px 8px;font-weight:600;white-space:nowrap}
+.chips span.over{background:#fde2e2;color:#9b1c1c}
+.chips .cp{margin-inline-start:auto;min-height:36px}
+.pager{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;font-size:14px;font-weight:600}
+.pager button{min-height:40px;min-width:44px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px Montserrat,sans-serif;cursor:pointer}
+.pager button:hover{border-color:var(--pur);color:var(--pur)}
+.poll{margin:0 16px 14px;border:1px solid var(--line);border-radius:10px;padding:14px}
+.poll b{display:block;margin-bottom:10px;font-size:15px}
+.poll div{border:1.5px solid var(--pur);color:var(--pur);border-radius:20px;padding:8px 14px;margin-top:8px;font-weight:600;font-size:14px;text-align:center}
+.poll small{display:block;margin-top:10px;color:var(--mut)}
+.vid{aspect-ratio:16/9;background:#000}.vid video{width:100%;height:100%;display:block}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.tabs button{min-height:44px;padding:0 16px;border-radius:22px;border:1.5px solid var(--pur);background:none;color:var(--pur);font:600 14.5px Montserrat,sans-serif;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--purbg);color:#fff}
+.form{margin:0 16px 14px;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14px}
+.form b{display:block;font-size:15px}.form p{margin:4px 0 10px;color:var(--mut)}
+.form label{display:block;margin-top:8px;font-weight:600;font-size:13px;color:var(--mut)}
+.form span{display:block;border:1px solid var(--line);border-radius:6px;padding:7px 10px;color:var(--ink);background:var(--bg)}
+.msg{margin:0 16px 14px;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14.5px;white-space:pre-line}
+.msg .opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;white-space:normal}
+.msg .opts span{border:1.5px solid var(--pur);color:var(--pur);border-radius:20px;padding:6px 14px;font-weight:600;font-size:14px}
+table.mix{width:100%;border-collapse:collapse;font-size:15px}
+.mix th,.mix td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.mix th{font-size:13.5px;color:var(--mut)}
+.mix td:first-child{font-weight:600}
+/* creatives, drawn at native pixel size */
+.lg{position:absolute;border:3px dashed rgba(255,255,255,.55);border-radius:12px;color:rgba(255,255,255,.75);font-weight:600;display:grid;place-items:center}
+.decl{position:absolute;background:#fff;color:#1F1A1E;border-radius:22px;box-shadow:0 30px 60px rgba(20,8,18,.35)}
+.decl .r{display:flex;justify-content:space-between;gap:20px;border-bottom:2px solid #eee3eb}
+.decl .r:last-of-type{border:0}
+.decl .r i{font-style:normal;color:#5f5560}
+.strike{text-decoration:line-through;text-decoration-thickness:5px;text-decoration-color:#E41E3F}
+.hit{background:#f2a7dc;border-radius:10px;padding:0 12px;margin-inline-end:-12px}
+.ring{position:absolute;border-radius:50%;border:3px solid rgba(240,220,235,.28)}
+.dot{position:absolute;border-radius:50%;background:#f2a7dc;box-shadow:0 0 0 14px rgba(242,167,220,.25)}
+@media(max-width:900px){header.band .wrap,.wall{grid-template-columns:minmax(0,1fr)}.fan{max-width:520px}}
+@media(max-width:600px){.mix thead{display:none}.mix tr{display:grid;padding-block:8px}.mix td{border:0;padding:3px 0}}
+</style>
+</head>
+<body>
+<script src="site.js" data-page="linkedin"></script>
+
+<header class="band"><div class="wrap">
+<div>
+<p class="kick">Content · LinkedIn</p>
+<h1>besso on LinkedIn: eight formats, each with one job</h1>
+<p class="lead">Built from the messaging house, at LinkedIn's exact sizes.</p>
+<p class="meta"><span><b>8</b> formats</span><span><b>3</b> ad variants to A/B test</span><span>Specs checked <b>23 Nov 2026</b></span></p>
+</div>
+<div class="fan" aria-hidden="true"><div class="stage f1" data-clone="img"></div><div class="stage f2" data-clone="car"></div><div class="stage f3" data-clone="adA"></div></div>
+</div></header>
+
+<nav class="jump scroll band" style="padding-block:0" aria-label="On this page"><a href="#organic">Organic</a><a href="#paid">Paid</a><a href="#mix">Weekly mix</a></nav>
+
+<main class="band" style="padding-top:0"><div class="wrap">
+
+<section class="s" id="organic">
+<h2 class="sec">Organic</h2>
+<p class="sub">One message: most trade teams overpay on tariffs, and besso shows where, with the legal basis.</p>
+<div class="wall">
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Company page</small></div></div>
+<div class="txt fold" data-c="3000" data-n="Post">Most trade teams overpay on tariffs without knowing it.
+
+Not through mistakes. Through lanes nobody has checked against the agreements that cover them.
+
+A product can qualify for a preferential rate on one lane and pay the full rate on the next, simply because its rule of origin was never checked.
+
+besso screens every product and lane against every agreement, and flags where a lower rate is available, with the legal basis attached.
+
+Where would you start: your biggest lane, or the one nobody has looked at?
+
+#TradeCompliance #Customs #SupplyChain</div>
+<button class="more" type="button">…see more</button>
+<div class="stage" id="img" data-w="1080" data-h="1350"><div class="art">
+<div class="lg" style="left:80px;top:80px;width:200px;height:72px;font-size:24px">logo</div>
+<div style="position:absolute;left:80px;top:220px;width:930px;font-size:84px;line-height:1.06;font-weight:700">Most trade teams overpay on tariffs without knowing it.</div>
+<div class="decl" style="left:80px;right:80px;bottom:110px;padding:24px 44px;font-size:34px">
+<div class="r" style="padding:20px 0"><i>Product</i><b>Roasted coffee · HS 0901.21</b></div>
+<div class="r" style="padding:20px 0"><i>Lane</i><b>Vietnam → EU</b></div>
+<div class="r" style="padding:20px 0"><i>Rate applied</i><b class="strike">Standard rate</b></div>
+<div class="r" style="padding:20px 0"><i>Rate available</i><b class="hit">EU–Vietnam FTA</b></div>
+</div>
+<div style="position:absolute;left:80px;bottom:44px;font-size:24px;color:#f0dceb">Illustrative example</div>
+</div></div>
+<div class="pf"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+<div class="spec"><h3>Single image post</h3><p>Stops the scroll with one clear claim.</p><div class="chips"><span>1080 × 1350 · 4:5</span></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Company page</small></div></div>
+<div class="txt fold" data-c="3000" data-n="Post">Does your product qualify for a lower tariff?
+
+Most teams can answer that for a few big lanes. Here is the five-step check to run on all the others. Save it for your next sourcing review.
+
+#RulesOfOrigin #FreeTradeAgreements #TradeCompliance</div>
+<button class="more" type="button">…see more</button>
+<div class="stage" id="car" data-w="1080" data-h="1350"></div>
+<div class="pager"><button type="button" data-d="-1" aria-label="Previous page">‹</button><span id="pg">1 / 7</span><button type="button" data-d="1" aria-label="Next page">›</button></div>
+<div class="pf"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+<div class="spec"><h3>Document carousel (PDF)</h3><p>Gets saved and shared; teaches the five-step check.</p><div class="chips"><span>1080 × 1350 per page · 7 pages</span><span>Title: The five-step tariff check</span></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Company page</small></div></div>
+<div class="txt" data-c="3000" data-n="Post">Quick question for trade and customs teams. We'll share the results in two weeks.</div>
+<div class="poll"><b data-c="140" data-n="Question">When a new trade agreement enters into force, how soon does your team start claiming it?</b>
+<div data-c="30" data-n="Option 1">Within a month</div><div data-c="30" data-n="Option 2">Within six months</div><div data-c="30" data-n="Option 3">Later than that</div><div data-c="30" data-n="Option 4">We don't track this</div>
+<small>Runs for 2 weeks · results become a follow-up post</small></div>
+<div class="pf"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+<div class="spec"><h3>Poll</h3><p>Free market research that feeds sales.</p><div class="chips"></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Company page</small></div></div>
+<div class="txt" data-c="3000" data-n="Post">Rules of origin decide whether a trade agreement actually lowers your duty. They're also where most claims go wrong. Our plain-words guide covers the three tests, the proof you need and the common traps.</div>
+<div class="stage" id="link" data-w="1200" data-h="627"><div class="art">
+<div style="position:absolute;left:70px;top:90px;width:520px;font-size:66px;line-height:1.08;font-weight:700">Rules of origin, in plain words</div>
+<div class="lg" style="left:70px;bottom:70px;width:170px;height:60px;font-size:21px">logo</div>
+<div style="position:absolute;left:650px;top:100px;right:70px;display:grid;gap:26px">
+<div style="background:#fff;color:#1F1A1E;border-radius:16px;padding:24px 28px;font-size:28px;font-weight:600">Change in tariff heading</div>
+<div style="background:#f2a7dc;color:#1F1A1E;border-radius:16px;padding:24px 28px;font-size:28px;font-weight:600;margin-left:40px">Regional value content</div>
+<div style="background:#fff;color:#1F1A1E;border-radius:16px;padding:24px 28px;font-size:28px;font-weight:600;margin-left:80px">Specific process</div>
+</div></div></div>
+<div class="lk"><b data-c="70" data-n="Link title">Rules of origin, in plain words</b><small>besso.com · <span class="gap">blog URL</span></small></div>
+<div class="pf"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+<div class="spec"><h3>Link post</h3><p>Sends buyers to the guide on besso.com.</p><div class="chips"><span>1200 × 627 · 1.91:1</span></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Company page</small></div></div>
+<div class="txt" data-c="3000" data-n="Post">What besso does, in 46 seconds: your data in, every lane screened, the legal basis for each saving, and monitoring that keeps going as the rules change. Sound on.</div>
+<div class="vid"><video src="media/besso-explainer.mp4" poster="media/explainer-poster.jpg" controls playsinline preload="none"></video></div>
+<div class="pf"><span>Like</span><span>Comment</span><span>Repost</span><span>Send</span></div>
+<div class="spec"><h3>Native video</h3><p>Explains the product in 46 seconds.</p><div class="chips"><span>1280 × 720 · 16:9 · 46 s</span><a class="src" href="product-animation.html">See the storyboard</a></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>The Trade Signal</b><small>Newsletter by besso · weekly</small></div></div>
+<div class="stage" id="news" data-w="1920" data-h="1080"><div class="art">
+<div class="ring" style="width:1300px;height:1300px;right:-380px;top:-110px"></div>
+<div class="ring" style="width:900px;height:900px;right:-180px;top:90px"></div>
+<div class="ring" style="width:500px;height:500px;right:20px;top:290px"></div>
+<div class="dot" style="width:34px;height:34px;right:560px;top:330px"></div>
+<div class="dot" style="width:34px;height:34px;right:250px;top:720px"></div>
+<div class="dot" style="width:34px;height:34px;right:120px;top:400px"></div>
+<div style="position:absolute;left:130px;top:330px;width:900px;font-size:136px;line-height:1;font-weight:700">The Trade Signal</div>
+<div style="position:absolute;left:130px;top:640px;width:860px;font-size:46px;line-height:1.3;color:#f0dceb">What changed in trade rules this week, and who it affects</div>
+<div class="lg" style="left:130px;bottom:110px;width:220px;height:76px;font-size:26px">logo</div>
+</div></div>
+<div class="lk"><b>Issue 1: Three rule changes this week, and who they affect</b><small>Subscribers are notified each time a new issue goes out</small></div>
+<div class="spec"><h3>Newsletter</h3><p>Builds an owned audience, fed weekly by the Signal Engine.</p><div class="chips"><span>Cover 1920 × 1080 · 16:9</span><a class="src" href="signal-engine.html">Open the Signal Engine</a></div></div>
+</article>
+
+</div>
+</section>
+
+<section class="s" id="paid">
+<h2 class="sec">Paid</h2>
+<p class="sub">Aimed at customs, trade compliance and supply chain leads in food, FMCG and CPG.</p>
+<div class="wall">
+
+<article class="post">
+<div class="tabs" role="tablist" aria-label="Ad variant" style="padding:14px 16px 0"><button role="tab" aria-selected="true" data-v="0">A · Problem</button><button role="tab" aria-selected="false" data-v="1">B · Benefit</button><button role="tab" aria-selected="false" data-v="2">C · Proof</button></div>
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Promoted</small></div></div>
+<div class="txt" id="adI" data-c="150" data-n="Intro"></div>
+<div class="stage" id="adA" data-w="1200" data-h="627"><div class="art">
+<div class="lg" style="left:70px;top:60px;width:170px;height:60px;font-size:21px">logo</div>
+<div id="adH" style="position:absolute;left:70px;top:170px;width:640px;font-size:60px;line-height:1.1;font-weight:700"></div>
+<div id="adS" style="position:absolute;left:70px;bottom:56px;width:640px;font-size:22px;color:#f0dceb"></div>
+<div class="decl" style="right:60px;top:110px;width:400px;padding:16px 30px;font-size:24px">
+<div class="r" style="padding:16px 0"><i>Lanes checked</i><b>All</b></div>
+<div class="r" style="padding:16px 0"><i>Agreements</i><b>Every one</b></div>
+<div class="r" style="padding:16px 0"><i>Legal basis</i><b class="hit">Attached</b></div>
+</div></div></div>
+<div class="adbar"><b id="adT" data-c="70" data-n="Headline"></b><span class="btnli">Request demo</span></div>
+<div class="spec"><h3>Single image ad, three variants</h3><p>Finds the angle that books demos.</p><div class="chips"><span>1200 × 627 · 1.91:1</span></div></div>
+</article>
+
+<article class="post">
+<div class="ph"><div class="av">b</div><div><b>besso</b><small>Promoted · Document ad with lead form</small></div></div>
+<div class="txt" data-c="150" data-n="Intro">Is your product paying full duty on a lane where it could pay less? Preview the five-step check, then get the full guide.</div>
+<div class="stage" id="docad" data-w="1080" data-h="1350"></div>
+<div class="form"><b data-c="60" data-n="Offer headline">Get the five-step tariff check</b><p data-c="160" data-n="Offer detail">A short guide for trade and customs teams: classify, map the lane, find the agreements, check the rule of origin, keep the proof.</p>
+<label>Name</label><span>Prefilled from LinkedIn</span><label>Work email</label><span>Prefilled from LinkedIn</span><label>Company · Job title</label><span>Prefilled from LinkedIn</span></div>
+<div class="spec"><h3>Document ad + lead gen form</h3><p>Turns the guide into leads in HubSpot.</p><div class="chips"><span>1080 × 1350 · 3 pages free</span></div></div>
+</article>
+
+</div>
+</section>
+
+<section class="s" id="mix">
+<h2 class="sec">The weekly mix</h2>
+<p class="sub">The company page teaches, signals create urgency, ads turn interest into meetings.</p>
+<div class="scroll"><table class="mix">
+<thead><tr><th>Format</th><th>Job</th><th>Cadence</th><th>Measured by</th></tr></thead>
+<tbody>
+<tr><td>Signal post</td><td>Be first on a live trade event</td><td>When the Signal Engine fires</td><td>Replies, meetings from affected accounts</td></tr>
+<tr><td>Image post / carousel</td><td>Teach one idea; get saved</td><td>1 per week, alternating</td><td>Saves, shares, follower growth</td></tr>
+<tr><td>Poll</td><td>Research and easy engagement</td><td>Monthly</td><td>Votes, follow-up post reach</td></tr>
+<tr><td>Video</td><td>Explain the product</td><td>Monthly</td><td>Completion rate, demo requests</td></tr>
+<tr><td>Newsletter</td><td>Owned audience</td><td>Weekly</td><td>Subscribers, open rate</td></tr>
+<tr><td>Image ads A/B/C</td><td>Demand in the ICP</td><td>Always on</td><td>CTR, cost per demo</td></tr>
+<tr><td>Document ad + form</td><td>Leads</td><td>Campaign bursts</td><td>Cost per lead, lead-to-meeting rate</td></tr>
+</tbody></table></div>
+</section>
+</div></main>
+
+<footer class="band"><div class="wrap"><p class="note" style="margin:0">Claims from besso.com; the coffee lane is illustrative. Specs from LinkedIn's help pages, 23 Nov 2026. Prepared by Ilia Paraskevopoulos with Claude; not official besso material.</p></div></footer>
+
+<script>
+{
+const pages=[
+ ['Does your product qualify for a lower tariff?','A five-step check your trade team can run on every lane.',1],
+ ['Classify the product','Start with the right HS code. A wrong code means the wrong rule of origin, and every later step fails.',0],
+ ['Map the lane','Where is it made, and where is it going? A preferential rate belongs to a lane, not to a product.',0],
+ ['Find every agreement on that lane','Some lanes are covered by more than one agreement. Each has its own rules, so check them all.',0],
+ ['Check the rule of origin','Does it pass a change in tariff heading, a value threshold, or a specific process? The rule decides.',0],
+ ['Keep the proof','Supplier declarations, origin statements and records you can show in an audit. No proof, no saving.',0],
+ ['Or let besso run the check on every lane, every week.','Book a demo at besso.com',2]];
+const page=(p,i)=>`<div class="art" style="width:1080px;height:1350px;${p[2]===2?'background:#1F1A1E':''}">
+<div class="lg" style="left:80px;top:80px;width:200px;height:72px;font-size:24px">logo</div>
+<div style="position:absolute;right:80px;top:100px;font-size:28px;color:#f0dceb">${i+1} / ${pages.length}</div>
+<div style="position:absolute;left:80px;top:${p[2]===1?330:420}px;width:900px;font-size:${p[2]===1?100:84}px;line-height:1.06;font-weight:700">${p[0]}</div>
+<div style="position:absolute;left:80px;bottom:150px;width:880px;font-size:40px;line-height:1.35;color:#f0dceb">${p[1]}</div>
+${p[2]===1?'<div style="position:absolute;left:80px;bottom:70px;font-size:28px;font-weight:600">Swipe →</div>':''}
+${p[2]===2?'<div style="position:absolute;left:80px;bottom:70px;width:300px;height:12px;border-radius:6px;background:#f2a7dc"></div>':''}</div>`;
+const car=document.getElementById('car'),doc=document.getElementById('docad'),pg=document.getElementById('pg');
+let at=0;
+const showCar=()=>{car.innerHTML=page(pages[at],at);pg.textContent=`${at+1} / ${pages.length}`;fit(car)};
+document.querySelectorAll('.pager button').forEach(b=>b.addEventListener('click',()=>{at=(at+ +b.dataset.d+pages.length)%pages.length;showCar()}));
+doc.innerHTML=page(pages[0],0);
+
+const ads=[
+ {i:'Most trade teams overpay on tariffs without knowing it. besso shows you where, lane by lane.',h:'Most trade teams overpay on tariffs without knowing it.',s:'besso.com',t:"See where you pay full duty when you don't have to"},
+ {i:'Every agreement, every lane, checked as the rules change. Find the duty savings already in your supply chain, with the legal basis for each.',h:'Find the duty savings already in your supply chain.',s:'besso.com',t:'Find the duty savings in your supply chain'},
+ {i:'An international ice-cream manufacturer unlocked $15M in quarterly savings, 2.5 months after full data access.',h:'$15M in quarterly savings, 2.5 months after full data access.',s:'VP Supply Chain, international ice-cream manufacturer · as published on besso.com',t:'See what besso finds in your trade lanes'}];
+const setAd=v=>{const a=ads[v];adI.textContent=a.i;adH.textContent=a.h;adS.textContent=a.s;adT.textContent=a.t;
+ document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',String(+b.dataset.v===v)));counts()};
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>setAd(+b.dataset.v)));
+
+function fit(st){const a=st.querySelector('.art');if(!a)return;const W=+(st.dataset.w||a.offsetWidth),H=+(st.dataset.h||a.offsetHeight);
+ st.style.aspectRatio=W+'/'+H;a.style.width=W+'px';a.style.height=H+'px';a.style.transform=`scale(${st.clientWidth/W})`}
+const ro=new ResizeObserver(es=>es.forEach(e=>fit(e.target)));
+
+function counts(){document.querySelectorAll('.post').forEach(p=>{const box=p.querySelector('.spec .chips');if(!box)return;
+ box.querySelectorAll('.cnt').forEach(x=>x.remove());const cp=box.querySelector('.cp');
+ const parts=[];p.querySelectorAll('[data-c]').forEach(el=>{const n=el.textContent.trim().length,l=+el.dataset.c;parts.push(el.textContent.trim());
+  const s=document.createElement('span');s.className='cnt'+(n>l?' over':'');s.textContent=`${el.dataset.n} ${n.toLocaleString('en')} / ${l.toLocaleString('en')}`;box.insertBefore(s,cp)});
+ const fold=p.querySelector('.txt.fold');if(fold){const f=fold.textContent.trim().split('\n')[0].length;const s=document.createElement('span');s.className='cnt'+(f>140?' over':'');s.textContent=`First line ${f} / 140 before "see more"`;box.insertBefore(s,cp)}
+ if(!cp&&parts.length){const b=document.createElement('button');b.className='cp';b.type='button';b.textContent='Copy text';
+  b.addEventListener('click',()=>{const t=[...p.querySelectorAll('[data-c]')].map(e=>e.textContent.trim()).join('\n\n');
+   navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied'},()=>{b.textContent='Copy failed'});setTimeout(()=>b.textContent='Copy text',1800)});box.appendChild(b)}})}
+
+document.querySelectorAll('.more').forEach(b=>b.addEventListener('click',()=>{const t=b.previousElementSibling;const open=t.classList.toggle('fold');b.textContent=open?'…see more':'show less'}));
+
+showCar();setAd(0);
+document.querySelectorAll('[data-clone]').forEach(st=>{const src=document.getElementById(st.dataset.clone);st.dataset.w=src.dataset.w;st.dataset.h=src.dataset.h;st.innerHTML=src.innerHTML;st.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'))});
+document.querySelectorAll('.stage').forEach(st=>{fit(st);ro.observe(st)});
+}
+</script>
+</body>
+</html>

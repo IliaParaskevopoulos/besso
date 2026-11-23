@@ -20,7 +20,8 @@
       { id: 'signal', label: 'Signal Engine', href: 'signal-engine.html', badge: 6 },
       { id: 'content', label: 'Content', children: [
         { id: 'web', label: 'Website Build', href: 'website-build.html', note: '80 Capsugel product pages, SEO, resource center' },
-        { id: 'anim', label: 'Product Animation', href: 'product-animation.html', note: 'besso explained in 46 seconds' }
+        { id: 'anim', label: 'Product Animation', href: 'product-animation.html', note: 'besso explained in 46 seconds' },
+        { id: 'linkedin', label: 'LinkedIn Content', href: 'linkedin-content.html', note: 'Eight formats, each with one job' }
       ]}
     ];
 
