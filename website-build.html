@@ -26,6 +26,20 @@
 .wbc .n{display:block;font-size:34px;font-weight:700;color:var(--pur);line-height:1}
 .wbc h3{margin:10px 0 6px;font-size:18px}
 .wbc p{margin:0;font-size:15px}
+.ex{margin-top:28px}.ex h3{margin:0 0 10px;font-size:18px}
+.br{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;max-width:900px;box-shadow:0 10px 30px rgba(74,26,65,.08)}
+.brbar{display:flex;align-items:center;gap:6px;background:#F1F2F4;padding:9px 12px;font-size:12.5px;color:#666}
+.brbar i{width:10px;height:10px;border-radius:50%;background:#d5d7db}.brbar span{margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg{padding:18px 22px;color:#1F1A1E}
+.crumb{margin:0 0 10px;font-size:12.5px;color:#777}
+.hero2{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;align-items:center;background:#F6F7F9;border-radius:10px;padding:20px}
+.hero2 h4{margin:0 0 6px;font-size:24px}.hero2 p{margin:0 0 12px;font-size:15px;color:#444}
+.b1,.b2{display:inline-block;font-size:13px;font-weight:600;border-radius:20px;padding:7px 14px;margin:2px 4px 2px 0}.b1{background:#1F1A1E;color:#fff}.b2{border:1px solid #1F1A1E}
+.caps{display:flex;gap:10px;justify-content:center}.caps i{width:26px;height:64px;border-radius:13px;background:linear-gradient(180deg,#e9e3d6 50%,#d8cfbd 50%);transform:rotate(18deg)}.caps i:nth-child(2){background:linear-gradient(180deg,#e7b8d8 50%,#c98fb8 50%)}.caps i:nth-child(3){background:linear-gradient(180deg,#f3f3f3 50%,#dcdcdc 50%)}
+.ben{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.ben div{border:1px solid #e6e7ea;border-radius:8px;padding:10px;font-size:13.5px;color:#555}.ben b{display:block;color:#1F1A1E;font-size:14px}
+.res{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px}.res span{background:#F1F2F4;border-radius:14px;padding:4px 10px}
+.exn{font-size:14px;color:var(--mut);margin:8px 0 0}
+@media(max-width:600px){.hero2{grid-template-columns:minmax(0,1fr)}.caps{display:none}.ben{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .bridge{margin-top:28px;border:1px solid var(--line);border-radius:14px;padding:20px 22px;max-width:900px}
 .bridge h3{margin:0 0 6px;font-size:18px}.bridge p{margin:0}
 @media(max-width:900px){.wb{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.wb{grid-template-columns:minmax(0,1fr)}}
@@ -68,6 +82,17 @@
 <div class="wbc"><span class="n">SEO</span><h3>Search in Sitecore</h3><p>Optimised the pages for search in Sitecore, maintained and published the web content, and tracked how the content performed alongside the Marketo and Salesforce campaigns.</p></div>
 <div class="wbc"><span class="n">Leads</span><h3>Thought leadership</h3><p>Published thought-leadership content that brought in leads, and ran Capsugel's organic LinkedIn presence and paid campaigns to carry it to buyers.</p></div>
 </div>
+<section class="ex">
+<h3>Example product page</h3>
+<div class="br"><div class="brbar"><i></i><i></i><i></i><span>capsugel.com/nutraceutical-solutions/hard-empty-capsules/vcaps-plus-capsules</span></div>
+<div class="pg">
+<p class="crumb">Nutraceutical solutions › Hard empty capsules</p>
+<div class="hero2"><div><h4>Vcaps® Plus HPMC</h4><p>Vegan immediate-release HPMC capsules, made under the highest quality standards.</p><span class="b1">Download brochure</span> <span class="b2">Contact us</span></div><div class="caps" aria-hidden="true"><i></i><i></i><i></i></div></div>
+<div class="ben"><div><b>Colour options</b>Broadest range, incl. TiO2-free</div><div><b>Sustainable HPMC</b>Sustainably sourced</div><div><b>Low humidity</b>Performs in dry conditions</div><div><b>Versatile</b>Powder and liquid fill</div></div>
+<div class="res"><b>Resources</b><span>Brochure</span><span>FAQ</span><span>Comparison chart</span></div>
+</div></div>
+<p class="exn">Simplified view of one Capsugel product page. <a href="https://capsugel.com/nutraceutical-solutions/hard-empty-capsules/vcaps-plus-capsules">See the live page ↗</a></p>
+</section>
 <div class="bridge"><h3>What this means for besso</h3><p>besso sells a complex product to customs, supply chain and finance. The same playbook applies: clear pages per use case and ICP, a resource center on trade agreements and rules of origin (EU–Indonesia is the first article to write), search that brings in people looking for answers, and thought leadership that turns them into conversations.</p></div>
 </div></main>
 </body>

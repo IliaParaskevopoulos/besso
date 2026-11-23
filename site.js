@@ -19,9 +19,9 @@
       { id: 'b2b', label: 'B2B Outreach', href: 'b2b-outreach.html' },
       { id: 'signal', label: 'Signal Engine', href: 'signal-engine.html', badge: 6 },
       { id: 'content', label: 'Content', children: [
-        { id: 'web', label: 'Website Build', href: 'website-build.html', note: '80 Capsugel product pages, SEO, resource center' },
+        { id: 'linkedin', label: 'LinkedIn Content', href: 'linkedin-content.html', note: 'Eight formats, each with one job' },
         { id: 'anim', label: 'Product Animation', href: 'product-animation.html', note: 'besso explained in 46 seconds' },
-        { id: 'linkedin', label: 'LinkedIn Content', href: 'linkedin-content.html', note: 'Eight formats, each with one job' }
+        { id: 'web', label: 'Website Build', href: 'website-build.html', note: '80 Capsugel product pages, SEO, resource center' }
       ]}
     ];
 
